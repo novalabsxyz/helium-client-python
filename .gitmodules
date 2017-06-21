@@ -1,0 +1,3 @@
+[submodule "src/helium-client"]
+	path = src/helium-client
+	url = https://github.com/helium/helium-client
