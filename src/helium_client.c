@@ -2699,7 +2699,7 @@ static PyObject *__pyx_pf_13helium_client_6Helium_10sleep(struct __pyx_obj_13hel
  *         return _check_result(self, chelium.sleep(&self._ctx, NULL))
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
- *         cdef int fd = <int>self._ctx.param
+ *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:
  */
 
@@ -2726,15 +2726,15 @@ static PyObject *__pyx_pf_13helium_client_6Helium_12close(struct __pyx_obj_13hel
   /* "helium_client.pyx":91
  * 
  *     def close(self):
- *         cdef int fd = <int>self._ctx.param             # <<<<<<<<<<<<<<
+ *         cdef int fd = <int><intptr_t>self._ctx.param             # <<<<<<<<<<<<<<
  *         if fd != 0:
  *             chelium.close_serial_port(fd)
  */
-  __pyx_v_fd = ((int)__pyx_v_self->_ctx.param);
+  __pyx_v_fd = ((int)((intptr_t)__pyx_v_self->_ctx.param));
 
   /* "helium_client.pyx":92
  *     def close(self):
- *         cdef int fd = <int>self._ctx.param
+ *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:             # <<<<<<<<<<<<<<
  *             chelium.close_serial_port(fd)
  * 
@@ -2743,7 +2743,7 @@ static PyObject *__pyx_pf_13helium_client_6Helium_12close(struct __pyx_obj_13hel
   if (__pyx_t_1) {
 
     /* "helium_client.pyx":93
- *         cdef int fd = <int>self._ctx.param
+ *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:
  *             chelium.close_serial_port(fd)             # <<<<<<<<<<<<<<
  * 
@@ -2753,7 +2753,7 @@ static PyObject *__pyx_pf_13helium_client_6Helium_12close(struct __pyx_obj_13hel
 
     /* "helium_client.pyx":92
  *     def close(self):
- *         cdef int fd = <int>self._ctx.param
+ *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:             # <<<<<<<<<<<<<<
  *             chelium.close_serial_port(fd)
  * 
@@ -2764,7 +2764,7 @@ static PyObject *__pyx_pf_13helium_client_6Helium_12close(struct __pyx_obj_13hel
  *         return _check_result(self, chelium.sleep(&self._ctx, NULL))
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
- *         cdef int fd = <int>self._ctx.param
+ *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:
  */
 

@@ -15,7 +15,7 @@ sourcefiles = ['src/helium_client.c',
 
 extensions = [Extension('helium_client',
                         include_dirs=['src/helium-client'],
-			extra_compile_args=['-std=gnu99'],
+			extra_compile_args=['-std=gnu99', '-Werror'],
                         sources=sourcefiles)]
 
 setup(name='helium-client',

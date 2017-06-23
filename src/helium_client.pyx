@@ -88,7 +88,7 @@ cdef class Helium:
         return _check_result(self, chelium.sleep(&self._ctx, NULL))
 
     def close(self):
-        cdef int fd = <int>self._ctx.param
+        cdef int fd = <int><intptr_t>self._ctx.param
         if fd != 0:
             chelium.close_serial_port(fd)
 
