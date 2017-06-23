@@ -13,6 +13,8 @@ after_deploy:
 deploy:
   - provider: releases
     skip_cleanup: true
+    api_key:
+      secure: FuRkMZtKGJRXL8/vSfT0UyxokjWxrlVovnDOlNGPVZEf4jjp7FFjSOQMShGbFtUikKo/yJNVklinx6cC6MGZ9lxcJQi70yZMVyo/OB21AVZoPcN/Kk21qHPuKuC3Jc9zkIWlBC4Xcy61pYJB72aepgiWgTExgOMcvcfLrItp1MuldAbALx/y0LtOPC9vLCZXw/szHiFF7IGccWIGEsMqyPU2lysWW2Z2WKv4znCCsNu2QDqzPdXK/AOjEFUG9WIocnflmRUZFbbExoust93sjTWIyXTRXgAY1cuY8bnVoW62cYASGPN00gnDK+ZdBYWKrpc2EmLjIxLGeVLYc9tXY33ECXjrIWMKYKHxj4ZQ+wEjIkwNhW+sSaE0sbOH2YOfEkRnYPBD+3bTvkp/HwwNX6FqmCoi5upSQdAJTtiaivdzLelng88mAJsoEH6Ai9V8dRO8G2vg7i5yKX6s6bJ/94abkgbvhRnu6wzJ9RwL+JkhANEn4KSJNmqfjVNyYjKiODSkxzvKBm4NN0Hnjq54SlP1ixPSrlHmUH9zed7DYEEGb8rOdk2WlHGY+WsKmUZe1mQNYFh+FWyUaWYH4VodituNBTarLjAsNcIZ9lqZkV4UbyXay1ZDz0h5+QORN5Y8cDsMeNT14xvjvd/8SkvPHZYmNzW7FaCx1skHXKMgSyU=
     on:
       repo: helium/helium-client-python
       tags: true
