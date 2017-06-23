@@ -7,7 +7,7 @@ setup.py file for helium-client-python
 from distutils.core import setup, Extension
 
 sourcefiles = ['src/helium_client.c',
-               'src/helium-serial.c',
+               'src/helium_serial.c',
                'src/helium-client/helium-client.c',
                'src/helium-client/cauterize/atom_api.c',
                'src/helium-client/cauterize/atom_api_message.c',

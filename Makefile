@@ -3,6 +3,9 @@ LIB_HELIUM_CLIENT=${PROJECT}.so
 
 all: ${LIB_HELIUM_CLIENT}
 
+.PHONY: ci
+ci: all
+
 .PHONY: install
 install: ${LIB_HELIUM_CLIENT}
 	python setup.py install
@@ -11,7 +14,7 @@ install: ${LIB_HELIUM_CLIENT}
 uninstall:
 	pip uninstall -y -q ${PROJECT}
 
-${PROJECT}.c: src/c${PROJECT}.pxd src/${PROJECT}.pyx
+src/${PROJECT}.c: src/c${PROJECT}.pxd src/${PROJECT}.pyx
 	cython -I helium-client src/${PROJECT}.pyx -o src/${PROJECT}.c
 
 .PHONY: ${LIB_HELIUM_CLIENT}

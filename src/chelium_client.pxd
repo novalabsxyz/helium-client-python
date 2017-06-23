@@ -50,8 +50,8 @@ cdef extern from "helium-client.h":
 
     int channel_create "helium_channel_create"(ctx *, const char *, size_t, uint16_t *)
     int channel_send "helium_channel_send"(ctx *, uint8_t, void *, size_t, uint16_t *)
-    int channel_poll "helium_channel_poll"(ctx *, uint16_t, int8_t *, uint32_t)
+    int channel_poll_result "helium_channel_poll_result"(ctx *, uint16_t, int8_t *, uint32_t)
 
-cdef extern from "helium-serial.h":
+cdef extern from "helium_serial.h":
   int open_serial_port(const char *, helium_baud)
   void close_serial_port(int)

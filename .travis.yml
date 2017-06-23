@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.5"
+
+script:
+  - make ci
+
+after_deploy:
+  - make gh-pages
+
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    on:
+      repo: helium/helium-client-python
+      tags: true

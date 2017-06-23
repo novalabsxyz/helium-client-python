@@ -431,7 +431,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #define __PYX_HAVE_API__helium_client
 #include <stdint.h>
 #include "helium-client.h"
-#include "helium-serial.h"
+#include "helium_serial.h"
 #include <string.h>
 #include <errno.h>
 #ifdef _OPENMP
@@ -629,7 +629,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "helium_client.pyx",
+  "src/helium_client.pyx",
 };
 
 /*--- Type declarations ---*/
@@ -1109,7 +1109,7 @@ static const char __pyx_k_check_result_details[] = "_check_result_details";
 static const char __pyx_k_Helium_mac_08x_version_04x[] = "Helium <mac: {:08x} version: {:04x}>";
 static const char __pyx_k_channel_response_locals__check[] = "_channel_response.<locals>._check_result_details";
 static const char __pyx_k_channel_response_locals_lambda[] = "_channel_response.<locals>.<lambda>";
-static const char __pyx_k_Users_men_git_helium_client_pyt[] = "/Users/men/git/helium-client-python/helium_client.pyx";
+static const char __pyx_k_Users_men_git_helium_client_pyt[] = "/Users/men/git/helium-client-python/src/helium_client.pyx";
 static const char __pyx_k_mac_uptime_time_fw_version_radio[] = "mac uptime time fw_version radio_count";
 static PyObject *__pyx_kp_s_0_name_1_id_2;
 static PyObject *__pyx_n_s_Channel;
@@ -2987,7 +2987,7 @@ static PyObject *__pyx_pw_13helium_client_6Helium_17_channel_response(PyObject *
 }
 
 /* "helium_client.pyx":106
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
  *             if result >= 0:
@@ -3120,7 +3120,7 @@ static PyObject *__pyx_pf_13helium_client_6Helium_17_channel_response__check_res
   }
 
   /* "helium_client.pyx":106
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
  *             if result >= 0:
@@ -3315,7 +3315,7 @@ static PyObject *__pyx_pf_13helium_client_6Helium_16_channel_response(struct __p
  * 
  *         cdef int8_t result
  *         if status == chelium.OK:             # <<<<<<<<<<<<<<
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
  * 
  */
   __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
@@ -3329,13 +3329,13 @@ static PyObject *__pyx_pf_13helium_client_6Helium_16_channel_response(struct __p
     /* "helium_client.pyx":104
  *         cdef int8_t result
  *         if status == chelium.OK:
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)             # <<<<<<<<<<<<<<
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)             # <<<<<<<<<<<<<<
  * 
  *         def _check_result_details():
  */
     __pyx_t_9 = __Pyx_PyInt_As_uint16_t(__pyx_cur_scope->__pyx_v_token); if (unlikely((__pyx_t_9 == ((uint16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 104, __pyx_L1_error)
     __pyx_t_10 = __Pyx_PyInt_As_uint32_t(__pyx_v_retries); if (unlikely((__pyx_t_10 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 104, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyInt_From_int(helium_channel_poll((&__pyx_v_self->_ctx), __pyx_t_9, (&__pyx_cur_scope->__pyx_v_result), __pyx_t_10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(helium_channel_poll_result((&__pyx_v_self->_ctx), __pyx_t_9, (&__pyx_cur_scope->__pyx_v_result), __pyx_t_10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF_SET(__pyx_v_status, __pyx_t_4);
     __pyx_t_4 = 0;
@@ -3344,13 +3344,13 @@ static PyObject *__pyx_pf_13helium_client_6Helium_16_channel_response(struct __p
  * 
  *         cdef int8_t result
  *         if status == chelium.OK:             # <<<<<<<<<<<<<<
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
  * 
  */
   }
 
   /* "helium_client.pyx":106
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
  *             if result >= 0:
@@ -5028,7 +5028,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
   /* "helium_client.pyx":106
- *             status = chelium.channel_poll(&self._ctx, token, &result, retries)
+ *             status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
  *             if result >= 0:

@@ -22,7 +22,6 @@
 *.dylib
 
 # Executables
-helium
 *.exe
 *.out
 *.app

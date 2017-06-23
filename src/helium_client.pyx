@@ -101,7 +101,7 @@ cdef class Helium:
 
         cdef int8_t result
         if status == chelium.OK:
-            status = chelium.channel_poll(&self._ctx, token, &result, retries)
+            status = chelium.channel_poll_result(&self._ctx, token, &result, retries)
 
         def _check_result_details():
             if result >= 0:

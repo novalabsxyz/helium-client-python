@@ -1,4 +1,4 @@
-#include "helium-serial.h"
+#include "helium_serial.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <inttypes.h>
