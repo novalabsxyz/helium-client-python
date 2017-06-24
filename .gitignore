@@ -3,6 +3,8 @@
 *.ko
 *.obj
 *.elf
+*.pyc
+*.egg-info
 
 # Precompiled Headers
 *.gch
@@ -33,3 +35,6 @@
 *.dSYM/
 *.su
 TAGS
+
+# Docs
+docs/_build
