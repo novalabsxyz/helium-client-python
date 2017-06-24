@@ -17,6 +17,31 @@ from libc.stdint cimport (
 
 
 class Info(namedtuple('Info', 'mac uptime time fw_version radio_count')):
+    """Represents information about a Helium Atom.
+
+    Information on a :class:`Helium` instance can be retrieved by
+    calling :meth:`.Helium.info`. The returned object has a number of
+    attributes that describe the Atom.
+
+    Attributes:
+
+        mac (:obj:`int`): The MAC address of the Atom as an 8 byte integer.
+
+        uptime (:obj:`int`): The number of seconds since the Atom has been
+            last restarted.
+
+        time (:obj:`int`): The current time in seconds since Unix Epoch of
+            the Helium Atom. The value of this attribute will not be
+            accurate until the Atom is connected to the Helium
+            Network.
+
+        fw_version (:obj:`int`): The version of the Atom as a 4 byte integer
+            representing the ``<majon><minor><patch><extra>`` of the
+            firmware version.
+
+        radio_count (:obj:`int`): The number of radios present in the Atom.
+
+    """
     __slots__ = ()
 
     def __repr__(self):
@@ -48,8 +73,9 @@ class DroppedError(HeliumError):
     """Represents the request being dropped by the Helium Atom.
 
     This should not happen with reasonable use of the Helium
-    Atom. This may occur when you send many requests quickly, or the
-    radio looses it's channel.
+    Atom. This may occur when you send many requests quickly, the
+    radio does not receive an acknowledgement of receipt by the
+    Element, or the radio looses access to it's channel.
 
     """
     pass
@@ -117,6 +143,16 @@ cdef class Helium:
         return needs_reset(&self._ctx)
 
     def info(self):
+        """Get information on the Helium Atom.
+
+        This gets current information on the Helium Atom this object
+        is communicating with. The Atom does not have to be connected
+        to the network for this method to be called.
+
+        Returns:
+
+            :class:`.Info` on the Helium Atom.
+        """
         cdef info info
         cdef int status = _info(&self._ctx, &info)
         return _check_result(self, status, lambda: Info(**info))
@@ -168,8 +204,8 @@ cdef class Helium:
 
             This method does not return anything but may raise a
             :class:`.HeliumErrror` or subclass representing the error
-            that occured. This should not happen in most cases, but if
-            the Atom is expecting mroe data or is in the process of
+            that occurred. This should not happen in most cases, but if
+            the Atom is expecting more data or is in the process of
             receiving an update an error may be raised and will need
             to be handled.
 
@@ -253,6 +289,11 @@ class Channel(object):
     def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):
         """Create a channel.
 
+        Warning:
+
+            Channel creation will only succeed if you have set up a
+            channel on your Helium Dashboard.
+
         Args:
 
             helium (:class:`.Helium`): The Helium Atom to use for
@@ -268,9 +309,7 @@ class Channel(object):
 
             If `retries` is `None` a token representing the
             request. Use :meth:`.poll` to fetch the channel response at a
-            later time using the returned token. For the create method
-            this response will be the channel id of the created
-            channel.
+            later time.
 
             A :class:`.Channel` instance if retries is not `None`. If
             an error occurred or the number of retries is exhausted a
@@ -319,6 +358,11 @@ class Channel(object):
 
             The response of the channel if successful. An exception is
             raised otherwise.
+
+            For the :meth:`.create`` method this response will be the
+            channel id of the created channel. For other channel
+            methods the response will be ``0`` if successful. On any
+            error a :class:`.ChannelError` is raised.
 
         Raises:
 

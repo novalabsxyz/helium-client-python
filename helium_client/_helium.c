@@ -652,7 +652,7 @@ struct __pyx_defaults2 {
   PyObject *__pyx_arg_retries;
 };
 
-/* "helium_client/_helium.pyx":95
+/* "helium_client/_helium.pyx":121
  * 
  * 
  * cdef class Helium:             # <<<<<<<<<<<<<<
@@ -665,12 +665,12 @@ struct __pyx_obj_13helium_client_7_helium_Helium {
 };
 
 
-/* "helium_client/_helium.pyx":119
+/* "helium_client/_helium.pyx":145
  *         return needs_reset(&self._ctx)
  * 
  *     def info(self):             # <<<<<<<<<<<<<<
- *         cdef info info
- *         cdef int status = _info(&self._ctx, &info)
+ *         """Get information on the Helium Atom.
+ * 
  */
 struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct__info {
   PyObject_HEAD
@@ -678,7 +678,7 @@ struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct__info {
 };
 
 
-/* "helium_client/_helium.pyx":204
+/* "helium_client/_helium.pyx":240
  *         return Channel.create(self, channel_name, retries=retries)
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -1122,8 +1122,9 @@ static const char __pyx_k_Users_men_git_helium_client_pyt[] = "/Users/men/git/he
 static const char __pyx_k_Represents_a_failure_communicati[] = "Represents a failure communicating with the Helium atom.";
 static const char __pyx_k_Represents_a_failure_getting_dat[] = "Represents a failure getting data for a channel request.";
 static const char __pyx_k_Represents_an_error_response_for[] = "Represents an error response for a channel request.";
+static const char __pyx_k_Represents_information_about_a_H[] = "Represents information about a Helium Atom.\n\n    Information on a :class:`Helium` instance can be retrieved by\n    calling :meth:`.Helium.info`. The returned object has a number of\n    attributes that describe the Atom.\n\n    Attributes:\n\n        mac (:obj:`int`): The MAC address of the Atom as an 8 byte integer.\n\n        uptime (:obj:`int`): The number of seconds since the Atom has been\n            last restarted.\n\n        time (:obj:`int`): The current time in seconds since Unix Epoch of\n            the Helium Atom. The value of this attribute will not be\n            accurate until the Atom is connected to the Helium\n            Network.\n\n        fw_version (:obj:`int`): The version of the Atom as a 4 byte integer\n            representing the ``<majon><minor><patch><extra>`` of the\n            firmware version.\n\n        radio_count (:obj:`int`): The number of radios present in the Atom.\n\n    ";
 static const char __pyx_k_Represents_not_being_connected_t[] = "Represents not being connected to the network.";
-static const char __pyx_k_Represents_the_request_being_dro[] = "Represents the request being dropped by the Helium Atom.\n\n    This should not happen with reasonable use of the Helium\n    Atom. This may occur when you send many requests quickly, or the\n    radio looses it's channel.\n\n    ";
+static const char __pyx_k_Represents_the_request_being_dro[] = "Represents the request being dropped by the Helium Atom.\n\n    This should not happen with reasonable use of the Helium\n    Atom. This may occur when you send many requests quickly, the\n    radio does not receive an acknowledgement of receipt by the\n    Element, or the radio looses access to it's channel.\n\n    ";
 static const char __pyx_k_Send_and_receive_data_to_IoT_bac[] = "Send and receive data to IoT back-end channels.\n\n    A channel can be created by calling :meth:`.Channel.create` or\n    using the convenience method :meth:`.Helium.create_channel`.\n\n    ";
 static const char __pyx_k_mac_uptime_time_fw_version_radio[] = "mac uptime time fw_version radio_count";
 static PyObject *__pyx_kp_s_0_name_1_id_2;
@@ -1146,6 +1147,7 @@ static PyObject *__pyx_n_s_NotConnectedError;
 static PyObject *__pyx_kp_s_Represents_a_failure_communicati;
 static PyObject *__pyx_kp_s_Represents_a_failure_getting_dat;
 static PyObject *__pyx_kp_s_Represents_an_error_response_for;
+static PyObject *__pyx_kp_s_Represents_information_about_a_H;
 static PyObject *__pyx_kp_s_Represents_not_being_connected_t;
 static PyObject *__pyx_kp_s_Represents_pending_data_for_the;
 static PyObject *__pyx_kp_s_Represents_the_request_being_dro;
@@ -1267,7 +1269,7 @@ static PyObject *__pyx_codeobj__20;
 static PyObject *__pyx_codeobj__22;
 static PyObject *__pyx_codeobj__24;
 
-/* "helium_client/_helium.pyx":22
+/* "helium_client/_helium.pyx":47
  *     __slots__ = ()
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -1303,7 +1305,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("__repr__", 0);
 
-  /* "helium_client/_helium.pyx":23
+  /* "helium_client/_helium.pyx":48
  * 
  *     def __repr__(self):
  *         template = "Helium <mac: {:08x} version: {:04x}>"             # <<<<<<<<<<<<<<
@@ -1313,7 +1315,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   __Pyx_INCREF(__pyx_kp_s_Helium_mac_08x_version_04x);
   __pyx_v_template = __pyx_kp_s_Helium_mac_08x_version_04x;
 
-  /* "helium_client/_helium.pyx":24
+  /* "helium_client/_helium.pyx":49
  *     def __repr__(self):
  *         template = "Helium <mac: {:08x} version: {:04x}>"
  *         return template.format(self.mac, self.fw_version)             # <<<<<<<<<<<<<<
@@ -1321,11 +1323,11 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_template, __pyx_n_s_format); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_template, __pyx_n_s_format); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_mac); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_mac); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fw_version); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fw_version); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -1342,7 +1344,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_3, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -1352,7 +1354,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_3, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -1360,7 +1362,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 24, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -1371,7 +1373,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_t_4);
     __pyx_t_3 = 0;
     __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -1380,7 +1382,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":22
+  /* "helium_client/_helium.pyx":47
  *     __slots__ = ()
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -1405,7 +1407,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4Info___repr__(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":82
+/* "helium_client/_helium.pyx":108
  * 
  * 
  * def _error_for(status, message=None):             # <<<<<<<<<<<<<<
@@ -1448,7 +1450,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_1_error_for(PyObject *__pyx_s
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_error_for") < 0)) __PYX_ERR(0, 82, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_error_for") < 0)) __PYX_ERR(0, 108, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1463,7 +1465,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_1_error_for(PyObject *__pyx_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_error_for", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 82, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_error_for", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 108, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium._error_for", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1490,16 +1492,16 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("_error_for", 0);
 
-  /* "helium_client/_helium.pyx":83
+  /* "helium_client/_helium.pyx":109
  * 
  * def _error_for(status, message=None):
  *     klazz = error_classes.get(status, None)             # <<<<<<<<<<<<<<
  *     if klazz is None:
  *         klazz = HeliumError
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_error_classes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_error_classes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_get); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_get); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -1517,7 +1519,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_status, Py_None};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -1525,13 +1527,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_status, Py_None};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -1542,7 +1544,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
     __Pyx_INCREF(Py_None);
     __Pyx_GIVEREF(Py_None);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, Py_None);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -1550,7 +1552,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   __pyx_v_klazz = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":84
+  /* "helium_client/_helium.pyx":110
  * def _error_for(status, message=None):
  *     klazz = error_classes.get(status, None)
  *     if klazz is None:             # <<<<<<<<<<<<<<
@@ -1561,19 +1563,19 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   __pyx_t_7 = (__pyx_t_6 != 0);
   if (__pyx_t_7) {
 
-    /* "helium_client/_helium.pyx":85
+    /* "helium_client/_helium.pyx":111
  *     klazz = error_classes.get(status, None)
  *     if klazz is None:
  *         klazz = HeliumError             # <<<<<<<<<<<<<<
  *     return klazz(message or status)
  * 
  */
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_klazz, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "helium_client/_helium.pyx":84
+    /* "helium_client/_helium.pyx":110
  * def _error_for(status, message=None):
  *     klazz = error_classes.get(status, None)
  *     if klazz is None:             # <<<<<<<<<<<<<<
@@ -1582,7 +1584,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
  */
   }
 
-  /* "helium_client/_helium.pyx":86
+  /* "helium_client/_helium.pyx":112
  *     if klazz is None:
  *         klazz = HeliumError
  *     return klazz(message or status)             # <<<<<<<<<<<<<<
@@ -1590,7 +1592,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_message); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_message); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 112, __pyx_L1_error)
   if (!__pyx_t_7) {
   } else {
     __Pyx_INCREF(__pyx_v_message);
@@ -1612,14 +1614,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
     }
   }
   if (!__pyx_t_2) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -1628,20 +1630,20 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 86, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 112, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2); __pyx_t_2 = NULL;
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_3);
       __pyx_t_3 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -1651,7 +1653,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":82
+  /* "helium_client/_helium.pyx":108
  * 
  * 
  * def _error_for(status, message=None):             # <<<<<<<<<<<<<<
@@ -1675,7 +1677,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium__error_for(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":89
+/* "helium_client/_helium.pyx":115
  * 
  * 
  * def _check_result(self, status, builder=None, message=None):             # <<<<<<<<<<<<<<
@@ -1719,7 +1721,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_3_check_result(PyObject *__py
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_status)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_check_result", 0, 2, 4, 1); __PYX_ERR(0, 89, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_check_result", 0, 2, 4, 1); __PYX_ERR(0, 115, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -1733,7 +1735,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_3_check_result(PyObject *__py
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_check_result") < 0)) __PYX_ERR(0, 89, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_check_result") < 0)) __PYX_ERR(0, 115, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1752,7 +1754,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_3_check_result(PyObject *__py
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_check_result", 0, 2, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 89, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_check_result", 0, 2, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 115, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium._check_result", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1776,22 +1778,22 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
   int __pyx_t_6;
   __Pyx_RefNannySetupContext("_check_result", 0);
 
-  /* "helium_client/_helium.pyx":90
+  /* "helium_client/_helium.pyx":116
  * 
  * def _check_result(self, status, builder=None, message=None):
  *     if status == OK:             # <<<<<<<<<<<<<<
  *         return None if builder is None else builder()
  *     raise _error_for(status, message)
  */
-  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_status, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_status, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
 
-    /* "helium_client/_helium.pyx":91
+    /* "helium_client/_helium.pyx":117
  * def _check_result(self, status, builder=None, message=None):
  *     if status == OK:
  *         return None if builder is None else builder()             # <<<<<<<<<<<<<<
@@ -1816,10 +1818,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
         }
       }
       if (__pyx_t_5) {
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       } else {
-        __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
       }
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -1830,7 +1832,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "helium_client/_helium.pyx":90
+    /* "helium_client/_helium.pyx":116
  * 
  * def _check_result(self, status, builder=None, message=None):
  *     if status == OK:             # <<<<<<<<<<<<<<
@@ -1839,14 +1841,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
  */
   }
 
-  /* "helium_client/_helium.pyx":92
+  /* "helium_client/_helium.pyx":118
  *     if status == OK:
  *         return None if builder is None else builder()
  *     raise _error_for(status, message)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_error_for); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_error_for); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_4 = NULL;
   __pyx_t_6 = 0;
@@ -1863,7 +1865,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_status, __pyx_v_message};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_2);
   } else
@@ -1871,13 +1873,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_status, __pyx_v_message};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_2);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -1888,16 +1890,16 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
     __Pyx_INCREF(__pyx_v_message);
     __Pyx_GIVEREF(__pyx_v_message);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_6, __pyx_v_message);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_Raise(__pyx_t_2, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __PYX_ERR(0, 92, __pyx_L1_error)
+  __PYX_ERR(0, 118, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":89
+  /* "helium_client/_helium.pyx":115
  * 
  * 
  * def _check_result(self, status, builder=None, message=None):             # <<<<<<<<<<<<<<
@@ -1919,7 +1921,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_2_check_result(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":101
+/* "helium_client/_helium.pyx":127
  *     cdef ctx _ctx
  * 
  *     def __cinit__(self, const char * device_file):             # <<<<<<<<<<<<<<
@@ -1952,18 +1954,18 @@ static int __pyx_pw_13helium_client_7_helium_6Helium_1__cinit__(PyObject *__pyx_
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 101, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 127, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
     }
-    __pyx_v_device_file = __Pyx_PyObject_AsString(values[0]); if (unlikely((!__pyx_v_device_file) && PyErr_Occurred())) __PYX_ERR(0, 101, __pyx_L3_error)
+    __pyx_v_device_file = __Pyx_PyObject_AsString(values[0]); if (unlikely((!__pyx_v_device_file) && PyErr_Occurred())) __PYX_ERR(0, 127, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 101, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 127, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1988,7 +1990,7 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "helium_client/_helium.pyx":102
+  /* "helium_client/_helium.pyx":128
  * 
  *     def __cinit__(self, const char * device_file):
  *         self._ctx.param = <void *><intptr_t>0             # <<<<<<<<<<<<<<
@@ -1997,7 +1999,7 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
  */
   __pyx_v_self->_ctx.param = ((void *)((intptr_t)0));
 
-  /* "helium_client/_helium.pyx":103
+  /* "helium_client/_helium.pyx":129
  *     def __cinit__(self, const char * device_file):
  *         self._ctx.param = <void *><intptr_t>0
  *         fd = open_serial_port(device_file, baud_9600)             # <<<<<<<<<<<<<<
@@ -2006,7 +2008,7 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
  */
   __pyx_v_fd = open_serial_port(__pyx_v_device_file, helium_baud_b9600);
 
-  /* "helium_client/_helium.pyx":104
+  /* "helium_client/_helium.pyx":130
  *         self._ctx.param = <void *><intptr_t>0
  *         fd = open_serial_port(device_file, baud_9600)
  *         if fd < 0:             # <<<<<<<<<<<<<<
@@ -2016,16 +2018,16 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
   __pyx_t_1 = ((__pyx_v_fd < 0) != 0);
   if (__pyx_t_1) {
 
-    /* "helium_client/_helium.pyx":105
+    /* "helium_client/_helium.pyx":131
  *         fd = open_serial_port(device_file, baud_9600)
  *         if fd < 0:
  *             raise CommunicationError(strerror(errno))             # <<<<<<<<<<<<<<
  *         init(&self._ctx, <void *><intptr_t>fd)
  * 
  */
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_CommunicationError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_CommunicationError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyBytes_FromString(strerror(errno)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 105, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_FromString(strerror(errno)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -2038,14 +2040,14 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
       }
     }
     if (!__pyx_t_5) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_4};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2054,20 +2056,20 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_4};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 105, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -2075,9 +2077,9 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 105, __pyx_L1_error)
+    __PYX_ERR(0, 131, __pyx_L1_error)
 
-    /* "helium_client/_helium.pyx":104
+    /* "helium_client/_helium.pyx":130
  *         self._ctx.param = <void *><intptr_t>0
  *         fd = open_serial_port(device_file, baud_9600)
  *         if fd < 0:             # <<<<<<<<<<<<<<
@@ -2086,7 +2088,7 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
  */
   }
 
-  /* "helium_client/_helium.pyx":106
+  /* "helium_client/_helium.pyx":132
  *         if fd < 0:
  *             raise CommunicationError(strerror(errno))
  *         init(&self._ctx, <void *><intptr_t>fd)             # <<<<<<<<<<<<<<
@@ -2095,7 +2097,7 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
  */
   helium_init((&__pyx_v_self->_ctx), ((void *)((intptr_t)__pyx_v_fd)));
 
-  /* "helium_client/_helium.pyx":101
+  /* "helium_client/_helium.pyx":127
  *     cdef ctx _ctx
  * 
  *     def __cinit__(self, const char * device_file):             # <<<<<<<<<<<<<<
@@ -2119,7 +2121,7 @@ static int __pyx_pf_13helium_client_7_helium_6Helium___cinit__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":108
+/* "helium_client/_helium.pyx":134
  *         init(&self._ctx, <void *><intptr_t>fd)
  * 
  *     def needs_reset(self):             # <<<<<<<<<<<<<<
@@ -2147,7 +2149,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_2needs_reset(struct _
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("needs_reset", 0);
 
-  /* "helium_client/_helium.pyx":117
+  /* "helium_client/_helium.pyx":143
  * 
  *         """
  *         return needs_reset(&self._ctx)             # <<<<<<<<<<<<<<
@@ -2155,13 +2157,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_2needs_reset(struct _
  *     def info(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(helium_needs_reset((&__pyx_v_self->_ctx))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(helium_needs_reset((&__pyx_v_self->_ctx))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":108
+  /* "helium_client/_helium.pyx":134
  *         init(&self._ctx, <void *><intptr_t>fd)
  * 
  *     def needs_reset(self):             # <<<<<<<<<<<<<<
@@ -2180,17 +2182,17 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_2needs_reset(struct _
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":119
+/* "helium_client/_helium.pyx":145
  *         return needs_reset(&self._ctx)
  * 
  *     def info(self):             # <<<<<<<<<<<<<<
- *         cdef info info
- *         cdef int status = _info(&self._ctx, &info)
+ *         """Get information on the Helium Atom.
+ * 
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_5info(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_13helium_client_7_helium_6Helium_4info[] = "Helium.info(self)";
+static char __pyx_doc_13helium_client_7_helium_6Helium_4info[] = "Helium.info(self)\nGet information on the Helium Atom.\n\n        This gets current information on the Helium Atom this object\n        is communicating with. The Atom does not have to be connected\n        to the network for this method to be called.\n\n        Returns:\n\n            :class:`.Info` on the Helium Atom.\n        ";
 static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_5info(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -2202,7 +2204,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_5info(PyObject *__pyx
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":122
+/* "helium_client/_helium.pyx":158
  *         cdef info info
  *         cdef int status = _info(&self._ctx, &info)
  *         return _check_result(self, status, lambda: Info(**info))             # <<<<<<<<<<<<<<
@@ -2236,20 +2238,20 @@ static PyObject *__pyx_lambda_funcdef_lambda(PyObject *__pyx_self) {
   __pyx_outer_scope = (struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct__info *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_Info); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_Info); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __pyx_convert__to_py_struct__helium_info(__pyx_cur_scope->__pyx_v_info); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_3 = __pyx_convert__to_py_struct__helium_info(__pyx_cur_scope->__pyx_v_info); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (likely(PyDict_CheckExact(__pyx_t_3))) {
-    __pyx_t_2 = PyDict_Copy(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_2 = PyDict_Copy(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_2 = PyObject_CallFunctionObjArgs((PyObject*)&PyDict_Type, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_2 = PyObject_CallFunctionObjArgs((PyObject*)&PyDict_Type, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -2270,12 +2272,12 @@ static PyObject *__pyx_lambda_funcdef_lambda(PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":119
+/* "helium_client/_helium.pyx":145
  *         return needs_reset(&self._ctx)
  * 
  *     def info(self):             # <<<<<<<<<<<<<<
- *         cdef info info
- *         cdef int status = _info(&self._ctx, &info)
+ *         """Get information on the Helium Atom.
+ * 
  */
 
 static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_obj_13helium_client_7_helium_Helium *__pyx_v_self) {
@@ -2295,13 +2297,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct__info *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 119, __pyx_L1_error)
+    __PYX_ERR(0, 145, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
 
-  /* "helium_client/_helium.pyx":121
- *     def info(self):
+  /* "helium_client/_helium.pyx":157
+ *         """
  *         cdef info info
  *         cdef int status = _info(&self._ctx, &info)             # <<<<<<<<<<<<<<
  *         return _check_result(self, status, lambda: Info(**info))
@@ -2309,7 +2311,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
  */
   __pyx_v_status = helium_info((&__pyx_v_self->_ctx), (&__pyx_cur_scope->__pyx_v_info));
 
-  /* "helium_client/_helium.pyx":122
+  /* "helium_client/_helium.pyx":158
  *         cdef info info
  *         cdef int status = _info(&self._ctx, &info)
  *         return _check_result(self, status, lambda: Info(**info))             # <<<<<<<<<<<<<<
@@ -2317,11 +2319,11 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
  *     def connect(self, retries=POLL_RETRIES_5S):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_status); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_status); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_6Helium_4info_lambda, 0, __pyx_n_s_info_locals_lambda, ((PyObject*)__pyx_cur_scope), __pyx_n_s_helium_client__helium, __pyx_d, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_6Helium_4info_lambda, 0, __pyx_n_s_info_locals_lambda, ((PyObject*)__pyx_cur_scope), __pyx_n_s_helium_client__helium, __pyx_d, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -2338,7 +2340,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, ((PyObject *)__pyx_v_self), __pyx_t_3, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2348,7 +2350,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_5, ((PyObject *)__pyx_v_self), __pyx_t_3, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2356,7 +2358,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -2370,7 +2372,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
     PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_6, __pyx_t_4);
     __pyx_t_3 = 0;
     __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -2379,12 +2381,12 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":119
+  /* "helium_client/_helium.pyx":145
  *         return needs_reset(&self._ctx)
  * 
  *     def info(self):             # <<<<<<<<<<<<<<
- *         cdef info info
- *         cdef int status = _info(&self._ctx, &info)
+ *         """Get information on the Helium Atom.
+ * 
  */
 
   /* function exit code */
@@ -2404,7 +2406,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_4info(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":124
+/* "helium_client/_helium.pyx":160
  *         return _check_result(self, status, lambda: Info(**info))
  * 
  *     def connect(self, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -2441,7 +2443,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_7connect(PyObject *__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "connect") < 0)) __PYX_ERR(0, 124, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "connect") < 0)) __PYX_ERR(0, 160, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2454,7 +2456,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_7connect(PyObject *__
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("connect", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 124, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("connect", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 160, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium.connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2479,7 +2481,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("connect", 0);
 
-  /* "helium_client/_helium.pyx":147
+  /* "helium_client/_helium.pyx":183
  * 
  *         """
  *         return _check_result(self, connect(&self._ctx, NULL, retries))             # <<<<<<<<<<<<<<
@@ -2487,10 +2489,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
  *     def connected(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_As_uint32_t(__pyx_v_retries); if (unlikely((__pyx_t_3 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyInt_From_int(helium_connect((&__pyx_v_self->_ctx), NULL, __pyx_t_3)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_uint32_t(__pyx_v_retries); if (unlikely((__pyx_t_3 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(helium_connect((&__pyx_v_self->_ctx), NULL, __pyx_t_3)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -2507,7 +2509,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, ((PyObject *)__pyx_v_self), __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2516,14 +2518,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, ((PyObject *)__pyx_v_self), __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -2534,7 +2536,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -2543,7 +2545,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":124
+  /* "helium_client/_helium.pyx":160
  *         return _check_result(self, status, lambda: Info(**info))
  * 
  *     def connect(self, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -2566,7 +2568,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_6connect(struct __pyx
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":149
+/* "helium_client/_helium.pyx":185
  *         return _check_result(self, connect(&self._ctx, NULL, retries))
  * 
  *     def connected(self):             # <<<<<<<<<<<<<<
@@ -2594,7 +2596,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_8connected(struct __p
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("connected", 0);
 
-  /* "helium_client/_helium.pyx":158
+  /* "helium_client/_helium.pyx":194
  * 
  *         """
  *         return connected(&self._ctx)             # <<<<<<<<<<<<<<
@@ -2602,13 +2604,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_8connected(struct __p
  *     def sleep(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(helium_connected((&__pyx_v_self->_ctx))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(helium_connected((&__pyx_v_self->_ctx))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":149
+  /* "helium_client/_helium.pyx":185
  *         return _check_result(self, connect(&self._ctx, NULL, retries))
  * 
  *     def connected(self):             # <<<<<<<<<<<<<<
@@ -2627,7 +2629,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_8connected(struct __p
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":160
+/* "helium_client/_helium.pyx":196
  *         return connected(&self._ctx)
  * 
  *     def sleep(self):             # <<<<<<<<<<<<<<
@@ -2637,7 +2639,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_8connected(struct __p
 
 /* Python wrapper */
 static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_11sleep(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_13helium_client_7_helium_6Helium_10sleep[] = "Helium.sleep(self)\nDisconnect from the network.\n\n        This disconnects the Atom from the network and attempts to put\n        the Atom to sleep.\n\n\n        Note:\n\n            This method does not return anything but may raise a\n            :class:`.HeliumErrror` or subclass representing the error\n            that occured. This should not happen in most cases, but if\n            the Atom is expecting mroe data or is in the process of\n            receiving an update an error may be raised and will need\n            to be handled.\n\n        Raises:\n\n            :class:`.HeliumError`: A HeliumError or subclass\n                representing the error that occurred\n\n        ";
+static char __pyx_doc_13helium_client_7_helium_6Helium_10sleep[] = "Helium.sleep(self)\nDisconnect from the network.\n\n        This disconnects the Atom from the network and attempts to put\n        the Atom to sleep.\n\n\n        Note:\n\n            This method does not return anything but may raise a\n            :class:`.HeliumErrror` or subclass representing the error\n            that occurred. This should not happen in most cases, but if\n            the Atom is expecting more data or is in the process of\n            receiving an update an error may be raised and will need\n            to be handled.\n\n        Raises:\n\n            :class:`.HeliumError`: A HeliumError or subclass\n                representing the error that occurred\n\n        ";
 static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_11sleep(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -2660,7 +2662,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("sleep", 0);
 
-  /* "helium_client/_helium.pyx":182
+  /* "helium_client/_helium.pyx":218
  * 
  *         """
  *         return _check_result(self, sleep(&self._ctx, NULL))             # <<<<<<<<<<<<<<
@@ -2668,9 +2670,9 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
  *     def close(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(helium_sleep((&__pyx_v_self->_ctx), NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(helium_sleep((&__pyx_v_self->_ctx), NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -2687,7 +2689,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_self), __pyx_t_3};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2696,14 +2698,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_self), __pyx_t_3};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -2714,7 +2716,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
@@ -2723,7 +2725,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":160
+  /* "helium_client/_helium.pyx":196
  *         return connected(&self._ctx)
  * 
  *     def sleep(self):             # <<<<<<<<<<<<<<
@@ -2746,7 +2748,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_10sleep(struct __pyx_
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":184
+/* "helium_client/_helium.pyx":220
  *         return _check_result(self, sleep(&self._ctx, NULL))
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -2775,7 +2777,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_12close(struct __pyx_
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("close", 0);
 
-  /* "helium_client/_helium.pyx":191
+  /* "helium_client/_helium.pyx":227
  * 
  *         """
  *         cdef int fd = <int><intptr_t>self._ctx.param             # <<<<<<<<<<<<<<
@@ -2784,7 +2786,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_12close(struct __pyx_
  */
   __pyx_v_fd = ((int)((intptr_t)__pyx_v_self->_ctx.param));
 
-  /* "helium_client/_helium.pyx":192
+  /* "helium_client/_helium.pyx":228
  *         """
  *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:             # <<<<<<<<<<<<<<
@@ -2794,7 +2796,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_12close(struct __pyx_
   __pyx_t_1 = ((__pyx_v_fd != 0) != 0);
   if (__pyx_t_1) {
 
-    /* "helium_client/_helium.pyx":193
+    /* "helium_client/_helium.pyx":229
  *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:
  *             close_serial_port(fd)             # <<<<<<<<<<<<<<
@@ -2803,7 +2805,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_12close(struct __pyx_
  */
     close_serial_port(__pyx_v_fd);
 
-    /* "helium_client/_helium.pyx":192
+    /* "helium_client/_helium.pyx":228
  *         """
  *         cdef int fd = <int><intptr_t>self._ctx.param
  *         if fd != 0:             # <<<<<<<<<<<<<<
@@ -2812,7 +2814,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_12close(struct __pyx_
  */
   }
 
-  /* "helium_client/_helium.pyx":184
+  /* "helium_client/_helium.pyx":220
  *         return _check_result(self, sleep(&self._ctx, NULL))
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -2827,7 +2829,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_12close(struct __pyx_
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":195
+/* "helium_client/_helium.pyx":231
  *             close_serial_port(fd)
  * 
  *     def create_channel(self, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -2869,7 +2871,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_15create_channel(PyOb
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "create_channel") < 0)) __PYX_ERR(0, 195, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "create_channel") < 0)) __PYX_ERR(0, 231, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2884,7 +2886,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_15create_channel(PyOb
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("create_channel", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 195, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("create_channel", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 231, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium.create_channel", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2906,7 +2908,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_14create_channel(stru
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("create_channel", 0);
 
-  /* "helium_client/_helium.pyx":202
+  /* "helium_client/_helium.pyx":238
  *             :meth:`.Channel.create` for details.
  *         """
  *         return Channel.create(self, channel_name, retries=retries)             # <<<<<<<<<<<<<<
@@ -2914,12 +2916,12 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_14create_channel(stru
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_Channel); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_Channel); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_create); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_create); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -2927,10 +2929,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_14create_channel(stru
   __Pyx_INCREF(__pyx_v_channel_name);
   __Pyx_GIVEREF(__pyx_v_channel_name);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_channel_name);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 202, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 238, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -2939,7 +2941,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_14create_channel(stru
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":195
+  /* "helium_client/_helium.pyx":231
  *             close_serial_port(fd)
  * 
  *     def create_channel(self, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -2961,7 +2963,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_14create_channel(stru
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":204
+/* "helium_client/_helium.pyx":240
  *         return Channel.create(self, channel_name, retries=retries)
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3001,7 +3003,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_17_channel_response(P
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_token)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_channel_response", 0, 2, 3, 1); __PYX_ERR(0, 204, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_channel_response", 0, 2, 3, 1); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -3010,7 +3012,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_17_channel_response(P
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_channel_response") < 0)) __PYX_ERR(0, 204, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_channel_response") < 0)) __PYX_ERR(0, 240, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3027,7 +3029,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_17_channel_response(P
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_channel_response", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 204, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_channel_response", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 240, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium._channel_response", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3040,7 +3042,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_17_channel_response(P
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":212
+/* "helium_client/_helium.pyx":248
  *             status = channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
@@ -3077,7 +3079,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
   __pyx_outer_scope = (struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct_1__channel_response *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
 
-  /* "helium_client/_helium.pyx":213
+  /* "helium_client/_helium.pyx":249
  * 
  *         def _check_result_details():
  *             if result >= 0:             # <<<<<<<<<<<<<<
@@ -3087,7 +3089,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
   __pyx_t_1 = ((__pyx_cur_scope->__pyx_v_result >= 0) != 0);
   if (__pyx_t_1) {
 
-    /* "helium_client/_helium.pyx":214
+    /* "helium_client/_helium.pyx":250
  *         def _check_result_details():
  *             if result >= 0:
  *                 return result             # <<<<<<<<<<<<<<
@@ -3095,13 +3097,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
  *                 raise ChannelError(result)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyInt_From_int8_t(__pyx_cur_scope->__pyx_v_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int8_t(__pyx_cur_scope->__pyx_v_result); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "helium_client/_helium.pyx":213
+    /* "helium_client/_helium.pyx":249
  * 
  *         def _check_result_details():
  *             if result >= 0:             # <<<<<<<<<<<<<<
@@ -3110,7 +3112,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
  */
   }
 
-  /* "helium_client/_helium.pyx":216
+  /* "helium_client/_helium.pyx":252
  *                 return result
  *             else:
  *                 raise ChannelError(result)             # <<<<<<<<<<<<<<
@@ -3118,9 +3120,9 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
  *         return _check_result(self, status, _check_result_details)
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_ChannelError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_ChannelError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyInt_From_int8_t(__pyx_cur_scope->__pyx_v_result); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int8_t(__pyx_cur_scope->__pyx_v_result); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -3133,14 +3135,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
       }
     }
     if (!__pyx_t_5) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_4};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -3149,20 +3151,20 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_4};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 216, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 252, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -3170,10 +3172,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 216, __pyx_L1_error)
+    __PYX_ERR(0, 252, __pyx_L1_error)
   }
 
-  /* "helium_client/_helium.pyx":212
+  /* "helium_client/_helium.pyx":248
  *             status = channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
@@ -3196,7 +3198,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_17_channel_response__
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":206
+/* "helium_client/_helium.pyx":242
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):
  *         if retries is None:
  *             return _check_result(self, status, lambda: token)             # <<<<<<<<<<<<<<
@@ -3227,7 +3229,7 @@ static PyObject *__pyx_lambda_funcdef_lambda1(PyObject *__pyx_self) {
   __pyx_outer_scope = (struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct_1__channel_response *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_cur_scope->__pyx_v_token)) { __Pyx_RaiseClosureNameError("token"); __PYX_ERR(0, 206, __pyx_L1_error) }
+  if (unlikely(!__pyx_cur_scope->__pyx_v_token)) { __Pyx_RaiseClosureNameError("token"); __PYX_ERR(0, 242, __pyx_L1_error) }
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_token);
   __pyx_r = __pyx_cur_scope->__pyx_v_token;
   goto __pyx_L0;
@@ -3242,7 +3244,7 @@ static PyObject *__pyx_lambda_funcdef_lambda1(PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":204
+/* "helium_client/_helium.pyx":240
  *         return Channel.create(self, channel_name, retries=retries)
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3270,7 +3272,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_13helium_client_7_helium___pyx_scope_struct_1__channel_response *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 204, __pyx_L1_error)
+    __PYX_ERR(0, 240, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -3279,7 +3281,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_token);
   __Pyx_INCREF(__pyx_v_status);
 
-  /* "helium_client/_helium.pyx":205
+  /* "helium_client/_helium.pyx":241
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):
  *         if retries is None:             # <<<<<<<<<<<<<<
@@ -3290,7 +3292,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "helium_client/_helium.pyx":206
+    /* "helium_client/_helium.pyx":242
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):
  *         if retries is None:
  *             return _check_result(self, status, lambda: token)             # <<<<<<<<<<<<<<
@@ -3298,9 +3300,9 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
  *         cdef int8_t result
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_6Helium_17_channel_response_2lambda1, 0, __pyx_n_s_channel_response_locals_lambda, ((PyObject*)__pyx_cur_scope), __pyx_n_s_helium_client__helium, __pyx_d, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_6Helium_17_channel_response_2lambda1, 0, __pyx_n_s_channel_response_locals_lambda, ((PyObject*)__pyx_cur_scope), __pyx_n_s_helium_client__helium, __pyx_d, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 242, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     __pyx_t_7 = 0;
@@ -3317,7 +3319,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[4] = {__pyx_t_6, ((PyObject *)__pyx_v_self), __pyx_v_status, __pyx_t_5};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -3326,14 +3328,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[4] = {__pyx_t_6, ((PyObject *)__pyx_v_self), __pyx_v_status, __pyx_t_5};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       if (__pyx_t_6) {
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -3347,7 +3349,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
       __Pyx_GIVEREF(__pyx_t_5);
       PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_7, __pyx_t_5);
       __pyx_t_5 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -3356,7 +3358,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "helium_client/_helium.pyx":205
+    /* "helium_client/_helium.pyx":241
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):
  *         if retries is None:             # <<<<<<<<<<<<<<
@@ -3365,36 +3367,36 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
  */
   }
 
-  /* "helium_client/_helium.pyx":209
+  /* "helium_client/_helium.pyx":245
  * 
  *         cdef int8_t result
  *         if status == OK:             # <<<<<<<<<<<<<<
  *             status = channel_poll_result(&self._ctx, token, &result, retries)
  * 
  */
-  __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyObject_RichCompare(__pyx_v_status, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_4 = PyObject_RichCompare(__pyx_v_status, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (__pyx_t_2) {
 
-    /* "helium_client/_helium.pyx":210
+    /* "helium_client/_helium.pyx":246
  *         cdef int8_t result
  *         if status == OK:
  *             status = channel_poll_result(&self._ctx, token, &result, retries)             # <<<<<<<<<<<<<<
  * 
  *         def _check_result_details():
  */
-    __pyx_t_9 = __Pyx_PyInt_As_uint16_t(__pyx_cur_scope->__pyx_v_token); if (unlikely((__pyx_t_9 == ((uint16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L1_error)
-    __pyx_t_10 = __Pyx_PyInt_As_uint32_t(__pyx_v_retries); if (unlikely((__pyx_t_10 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyInt_From_int(helium_channel_poll_result((&__pyx_v_self->_ctx), __pyx_t_9, (&__pyx_cur_scope->__pyx_v_result), __pyx_t_10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 210, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyInt_As_uint16_t(__pyx_cur_scope->__pyx_v_token); if (unlikely((__pyx_t_9 == ((uint16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyInt_As_uint32_t(__pyx_v_retries); if (unlikely((__pyx_t_10 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(helium_channel_poll_result((&__pyx_v_self->_ctx), __pyx_t_9, (&__pyx_cur_scope->__pyx_v_result), __pyx_t_10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF_SET(__pyx_v_status, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "helium_client/_helium.pyx":209
+    /* "helium_client/_helium.pyx":245
  * 
  *         cdef int8_t result
  *         if status == OK:             # <<<<<<<<<<<<<<
@@ -3403,19 +3405,19 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
  */
   }
 
-  /* "helium_client/_helium.pyx":212
+  /* "helium_client/_helium.pyx":248
  *             status = channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
  *             if result >= 0:
  *                 return result
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_6Helium_17_channel_response_1_check_result_details, 0, __pyx_n_s_channel_response_locals__check, ((PyObject*)__pyx_cur_scope), __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_6Helium_17_channel_response_1_check_result_details, 0, __pyx_n_s_channel_response_locals__check, ((PyObject*)__pyx_cur_scope), __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 248, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_v__check_result_details = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "helium_client/_helium.pyx":218
+  /* "helium_client/_helium.pyx":254
  *                 raise ChannelError(result)
  * 
  *         return _check_result(self, status, _check_result_details)             # <<<<<<<<<<<<<<
@@ -3423,7 +3425,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
  *     def _channel_create(self, channel_name, retries=POLL_RETRIES_5S):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_check_result); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_8 = NULL;
   __pyx_t_7 = 0;
@@ -3440,7 +3442,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_8, ((PyObject *)__pyx_v_self), __pyx_v_status, __pyx_v__check_result_details};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else
@@ -3448,13 +3450,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_8, ((PyObject *)__pyx_v_self), __pyx_v_status, __pyx_v__check_result_details};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_8) {
       __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -3468,7 +3470,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
     __Pyx_INCREF(__pyx_v__check_result_details);
     __Pyx_GIVEREF(__pyx_v__check_result_details);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_7, __pyx_v__check_result_details);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -3477,7 +3479,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":204
+  /* "helium_client/_helium.pyx":240
  *         return Channel.create(self, channel_name, retries=retries)
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3503,7 +3505,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_16_channel_response(s
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":220
+/* "helium_client/_helium.pyx":256
  *         return _check_result(self, status, _check_result_details)
  * 
  *     def _channel_create(self, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3545,7 +3547,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_19_channel_create(PyO
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_channel_create") < 0)) __PYX_ERR(0, 220, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_channel_create") < 0)) __PYX_ERR(0, 256, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3560,7 +3562,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_19_channel_create(PyO
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_channel_create", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 220, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_channel_create", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 256, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium._channel_create", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3586,18 +3588,18 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_18_channel_create(str
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("_channel_create", 0);
 
-  /* "helium_client/_helium.pyx":222
+  /* "helium_client/_helium.pyx":258
  *     def _channel_create(self, channel_name, retries=POLL_RETRIES_5S):
  *         cdef uint16_t token
  *         cdef int status = channel_create(&self._ctx, channel_name, len(channel_name), &token)             # <<<<<<<<<<<<<<
  *         return self._channel_response(status, token, retries=retries)
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_AsString(__pyx_v_channel_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 222, __pyx_L1_error)
-  __pyx_t_2 = PyObject_Length(__pyx_v_channel_name); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsString(__pyx_v_channel_name); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_v_channel_name); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 258, __pyx_L1_error)
   __pyx_v_status = helium_channel_create((&__pyx_v_self->_ctx), __pyx_t_1, __pyx_t_2, (&__pyx_v_token));
 
-  /* "helium_client/_helium.pyx":223
+  /* "helium_client/_helium.pyx":259
  *         cdef uint16_t token
  *         cdef int status = channel_create(&self._ctx, channel_name, len(channel_name), &token)
  *         return self._channel_response(status, token, retries=retries)             # <<<<<<<<<<<<<<
@@ -3605,13 +3607,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_18_channel_create(str
  *     def _channel_send(self, channel_id, data, retries=POLL_RETRIES_5S):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_channel_response); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 223, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_channel_response); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_status); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 223, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_status); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyInt_From_uint16_t(__pyx_v_token); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 223, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_uint16_t(__pyx_v_token); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 223, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
@@ -3619,10 +3621,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_18_channel_create(str
   PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
   __pyx_t_4 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 223, __pyx_L1_error)
+  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 223, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 223, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3631,7 +3633,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_18_channel_create(str
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":220
+  /* "helium_client/_helium.pyx":256
  *         return _check_result(self, status, _check_result_details)
  * 
  *     def _channel_create(self, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3653,7 +3655,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_18_channel_create(str
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":225
+/* "helium_client/_helium.pyx":261
  *         return self._channel_response(status, token, retries=retries)
  * 
  *     def _channel_send(self, channel_id, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3693,7 +3695,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_21_channel_send(PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_data)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_channel_send", 0, 2, 3, 1); __PYX_ERR(0, 225, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_channel_send", 0, 2, 3, 1); __PYX_ERR(0, 261, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -3702,7 +3704,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_21_channel_send(PyObj
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_channel_send") < 0)) __PYX_ERR(0, 225, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_channel_send") < 0)) __PYX_ERR(0, 261, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3719,7 +3721,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_21_channel_send(PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_channel_send", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 225, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_channel_send", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 261, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium._channel_send", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3747,28 +3749,28 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_20_channel_send(struc
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("_channel_send", 0);
 
-  /* "helium_client/_helium.pyx":227
+  /* "helium_client/_helium.pyx":263
  *     def _channel_send(self, channel_id, data, retries=POLL_RETRIES_5S):
  *         cdef uint16_t token
  *         cdef char * data_bytes = data             # <<<<<<<<<<<<<<
  *         cdef int status = channel_send(&self._ctx, channel_id, data_bytes, len(data), &token)
  *         return self._channel_response(status, token, retries=retries)
  */
-  __pyx_t_1 = __Pyx_PyObject_AsString(__pyx_v_data); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsString(__pyx_v_data); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L1_error)
   __pyx_v_data_bytes = __pyx_t_1;
 
-  /* "helium_client/_helium.pyx":228
+  /* "helium_client/_helium.pyx":264
  *         cdef uint16_t token
  *         cdef char * data_bytes = data
  *         cdef int status = channel_send(&self._ctx, channel_id, data_bytes, len(data), &token)             # <<<<<<<<<<<<<<
  *         return self._channel_response(status, token, retries=retries)
  * 
  */
-  __pyx_t_2 = __Pyx_PyInt_As_uint8_t(__pyx_v_channel_id); if (unlikely((__pyx_t_2 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 228, __pyx_L1_error)
-  __pyx_t_3 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_3 == -1)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_As_uint8_t(__pyx_v_channel_id); if (unlikely((__pyx_t_2 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 264, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_3 == -1)) __PYX_ERR(0, 264, __pyx_L1_error)
   __pyx_v_status = helium_channel_send((&__pyx_v_self->_ctx), __pyx_t_2, __pyx_v_data_bytes, __pyx_t_3, (&__pyx_v_token));
 
-  /* "helium_client/_helium.pyx":229
+  /* "helium_client/_helium.pyx":265
  *         cdef char * data_bytes = data
  *         cdef int status = channel_send(&self._ctx, channel_id, data_bytes, len(data), &token)
  *         return self._channel_response(status, token, retries=retries)             # <<<<<<<<<<<<<<
@@ -3776,13 +3778,13 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_20_channel_send(struc
  *     def __enter__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_channel_response); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_channel_response); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_status); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_status); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyInt_From_uint16_t(__pyx_v_token); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_uint16_t(__pyx_v_token); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5);
@@ -3790,10 +3792,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_20_channel_send(struc
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_6);
   __pyx_t_5 = 0;
   __pyx_t_6 = 0;
-  __pyx_t_6 = PyDict_New(); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_6 = PyDict_New(); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 229, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -3802,7 +3804,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_20_channel_send(struc
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":225
+  /* "helium_client/_helium.pyx":261
  *         return self._channel_response(status, token, retries=retries)
  * 
  *     def _channel_send(self, channel_id, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -3824,7 +3826,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_20_channel_send(struc
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":231
+/* "helium_client/_helium.pyx":267
  *         return self._channel_response(status, token, retries=retries)
  * 
  *     def __enter__(self):             # <<<<<<<<<<<<<<
@@ -3851,7 +3853,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_22__enter__(struct __
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__enter__", 0);
 
-  /* "helium_client/_helium.pyx":232
+  /* "helium_client/_helium.pyx":268
  * 
  *     def __enter__(self):
  *         return self             # <<<<<<<<<<<<<<
@@ -3863,7 +3865,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_22__enter__(struct __
   __pyx_r = ((PyObject *)__pyx_v_self);
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":231
+  /* "helium_client/_helium.pyx":267
  *         return self._channel_response(status, token, retries=retries)
  * 
  *     def __enter__(self):             # <<<<<<<<<<<<<<
@@ -3878,7 +3880,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_22__enter__(struct __
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":234
+/* "helium_client/_helium.pyx":270
  *         return self
  * 
  *     def __exit__(self, a, b, tb):             # <<<<<<<<<<<<<<
@@ -3917,16 +3919,16 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_25__exit__(PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_b)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 1); __PYX_ERR(0, 234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 1); __PYX_ERR(0, 270, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_tb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 2); __PYX_ERR(0, 234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 2); __PYX_ERR(0, 270, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__exit__") < 0)) __PYX_ERR(0, 234, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__exit__") < 0)) __PYX_ERR(0, 270, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3941,7 +3943,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_6Helium_25__exit__(PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 234, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 270, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Helium.__exit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3962,14 +3964,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_24__exit__(struct __p
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("__exit__", 0);
 
-  /* "helium_client/_helium.pyx":235
+  /* "helium_client/_helium.pyx":271
  * 
  *     def __exit__(self, a, b, tb):
  *         self.close()             # <<<<<<<<<<<<<<
  *         return True
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_close); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_close); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 271, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3982,16 +3984,16 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_24__exit__(struct __p
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":236
+  /* "helium_client/_helium.pyx":272
  *     def __exit__(self, a, b, tb):
  *         self.close()
  *         return True             # <<<<<<<<<<<<<<
@@ -4003,7 +4005,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_24__exit__(struct __p
   __pyx_r = Py_True;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":234
+  /* "helium_client/_helium.pyx":270
  *         return self
  * 
  *     def __exit__(self, a, b, tb):             # <<<<<<<<<<<<<<
@@ -4024,7 +4026,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6Helium_24__exit__(struct __p
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":247
+/* "helium_client/_helium.pyx":283
  *     """
  * 
  *     def __init__(self, helium, channel_id, channel_name=None):             # <<<<<<<<<<<<<<
@@ -4067,12 +4069,12 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_1__init__(PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_helium)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 1); __PYX_ERR(0, 247, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 1); __PYX_ERR(0, 283, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_channel_id)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 2); __PYX_ERR(0, 247, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 2); __PYX_ERR(0, 283, __pyx_L3_error)
         }
         case  3:
         if (kw_args > 0) {
@@ -4081,7 +4083,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_1__init__(PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 247, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 283, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4100,7 +4102,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_1__init__(PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 247, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 283, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Channel.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4118,34 +4120,34 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel___init__(CYTHON_UNUS
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "helium_client/_helium.pyx":248
+  /* "helium_client/_helium.pyx":284
  * 
  *     def __init__(self, helium, channel_id, channel_name=None):
  *         self._helium = helium             # <<<<<<<<<<<<<<
  *         self._channel_id = channel_id
  *         self._channel_name = channel_name
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_helium_2, __pyx_v_helium) < 0) __PYX_ERR(0, 248, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_helium_2, __pyx_v_helium) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":249
+  /* "helium_client/_helium.pyx":285
  *     def __init__(self, helium, channel_id, channel_name=None):
  *         self._helium = helium
  *         self._channel_id = channel_id             # <<<<<<<<<<<<<<
  *         self._channel_name = channel_name
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_channel_id_2, __pyx_v_channel_id) < 0) __PYX_ERR(0, 249, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_channel_id_2, __pyx_v_channel_id) < 0) __PYX_ERR(0, 285, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":250
+  /* "helium_client/_helium.pyx":286
  *         self._helium = helium
  *         self._channel_id = channel_id
  *         self._channel_name = channel_name             # <<<<<<<<<<<<<<
  * 
  *     @classmethod
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_channel_name_2, __pyx_v_channel_name) < 0) __PYX_ERR(0, 250, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_channel_name_2, __pyx_v_channel_name) < 0) __PYX_ERR(0, 286, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":247
+  /* "helium_client/_helium.pyx":283
  *     """
  * 
  *     def __init__(self, helium, channel_id, channel_name=None):             # <<<<<<<<<<<<<<
@@ -4165,7 +4167,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel___init__(CYTHON_UNUS
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":253
+/* "helium_client/_helium.pyx":289
  * 
  *     @classmethod
  *     def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -4180,12 +4182,12 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4__defaults__(CYTHON_UNUSED P
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("__defaults__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self)->__pyx_arg_retries);
   __Pyx_GIVEREF(__Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self)->__pyx_arg_retries);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_self)->__pyx_arg_retries);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
@@ -4211,7 +4213,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_4__defaults__(CYTHON_UNUSED P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_3create(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_13helium_client_7_helium_7Channel_2create[] = "Channel.create(cls, helium, channel_name, retries=POLL_RETRIES_5S)\nCreate a channel.\n\n        Args:\n\n            helium (:class:`.Helium`): The Helium Atom to use for\n                communication.\n\n            channel_name (:obj:`str`): The name of the channel to create.\n\n            retries (:obj:`int`, optional): The number of times to\n                retry waiting for a response (defaults to about 5\n                seconds)\n\n        Returns:\n\n            If `retries` is `None` a token representing the\n            request. Use :meth:`.poll` to fetch the channel response at a\n            later time using the returned token. For the create method\n            this response will be the channel id of the created\n            channel.\n\n            A :class:`.Channel` instance if retries is not `None`. If\n            an error occurred or the number of retries is exhausted a\n            :class:`.HeliumError` is raised.\n\n        Raises:\n\n            :class:`.HeliumError`: A HeliumError or subclass\n                representing the error that occurred\n\n        ";
+static char __pyx_doc_13helium_client_7_helium_7Channel_2create[] = "Channel.create(cls, helium, channel_name, retries=POLL_RETRIES_5S)\nCreate a channel.\n\n        Warning:\n\n            Channel creation will only succeed if you have set up a\n            channel on your Helium Dashboard.\n\n        Args:\n\n            helium (:class:`.Helium`): The Helium Atom to use for\n                communication.\n\n            channel_name (:obj:`str`): The name of the channel to create.\n\n            retries (:obj:`int`, optional): The number of times to\n                retry waiting for a response (defaults to about 5\n                seconds)\n\n        Returns:\n\n            If `retries` is `None` a token representing the\n            request. Use :meth:`.poll` to fetch the channel response at a\n            later time.\n\n            A :class:`.Channel` instance if retries is not `None`. If\n            an error occurred or the number of retries is exhausted a\n            :class:`.HeliumError` is raised.\n\n        Raises:\n\n            :class:`.HeliumError`: A HeliumError or subclass\n                representing the error that occurred\n\n        ";
 static PyMethodDef __pyx_mdef_13helium_client_7_helium_7Channel_3create = {"create", (PyCFunction)__pyx_pw_13helium_client_7_helium_7Channel_3create, METH_VARARGS|METH_KEYWORDS, __pyx_doc_13helium_client_7_helium_7Channel_2create};
 static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_3create(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_cls = 0;
@@ -4245,12 +4247,12 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_3create(PyObject *__
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_helium)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("create", 0, 3, 4, 1); __PYX_ERR(0, 253, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("create", 0, 3, 4, 1); __PYX_ERR(0, 289, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_channel_name)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("create", 0, 3, 4, 2); __PYX_ERR(0, 253, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("create", 0, 3, 4, 2); __PYX_ERR(0, 289, __pyx_L3_error)
         }
         case  3:
         if (kw_args > 0) {
@@ -4259,7 +4261,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_3create(PyObject *__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "create") < 0)) __PYX_ERR(0, 253, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "create") < 0)) __PYX_ERR(0, 289, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4278,7 +4280,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_3create(PyObject *__
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("create", 0, 3, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 253, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("create", 0, 3, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 289, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Channel.create", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4303,24 +4305,24 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
   int __pyx_t_6;
   __Pyx_RefNannySetupContext("create", 0);
 
-  /* "helium_client/_helium.pyx":285
+  /* "helium_client/_helium.pyx":324
  * 
  *         """
  *         result = helium._channel_create(channel_name, retries=retries)             # <<<<<<<<<<<<<<
  *         if retries is None:
  *             return result
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_helium, __pyx_n_s_channel_create); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 285, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_helium, __pyx_n_s_channel_create); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 285, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_channel_name);
   __Pyx_GIVEREF(__pyx_v_channel_name);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_channel_name);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 285, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 285, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 285, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 324, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4328,7 +4330,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
   __pyx_v_result = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "helium_client/_helium.pyx":286
+  /* "helium_client/_helium.pyx":325
  *         """
  *         result = helium._channel_create(channel_name, retries=retries)
  *         if retries is None:             # <<<<<<<<<<<<<<
@@ -4339,7 +4341,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
   __pyx_t_6 = (__pyx_t_5 != 0);
   if (__pyx_t_6) {
 
-    /* "helium_client/_helium.pyx":287
+    /* "helium_client/_helium.pyx":326
  *         result = helium._channel_create(channel_name, retries=retries)
  *         if retries is None:
  *             return result             # <<<<<<<<<<<<<<
@@ -4351,7 +4353,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
     __pyx_r = __pyx_v_result;
     goto __pyx_L0;
 
-    /* "helium_client/_helium.pyx":286
+    /* "helium_client/_helium.pyx":325
  *         """
  *         result = helium._channel_create(channel_name, retries=retries)
  *         if retries is None:             # <<<<<<<<<<<<<<
@@ -4360,7 +4362,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
  */
   }
 
-  /* "helium_client/_helium.pyx":289
+  /* "helium_client/_helium.pyx":328
  *             return result
  * 
  *         return cls(helium, result, channel_name=channel_name)             # <<<<<<<<<<<<<<
@@ -4368,7 +4370,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
  *     def send(self, data, retries=POLL_RETRIES_5S):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_helium);
   __Pyx_GIVEREF(__pyx_v_helium);
@@ -4376,10 +4378,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
   __Pyx_INCREF(__pyx_v_result);
   __Pyx_GIVEREF(__pyx_v_result);
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_result);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_channel_name, __pyx_v_channel_name) < 0) __PYX_ERR(0, 289, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_v_cls, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 289, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_channel_name, __pyx_v_channel_name) < 0) __PYX_ERR(0, 328, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_v_cls, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4387,7 +4389,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":253
+  /* "helium_client/_helium.pyx":289
  * 
  *     @classmethod
  *     def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -4410,7 +4412,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_2create(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":291
+/* "helium_client/_helium.pyx":330
  *         return cls(helium, result, channel_name=channel_name)
  * 
  *     def send(self, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -4425,12 +4427,12 @@ static PyObject *__pyx_pf_13helium_client_7_helium_6__defaults__(CYTHON_UNUSED P
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("__defaults__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__Pyx_CyFunction_Defaults(__pyx_defaults1, __pyx_self)->__pyx_arg_retries);
   __Pyx_GIVEREF(__Pyx_CyFunction_Defaults(__pyx_defaults1, __pyx_self)->__pyx_arg_retries);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __Pyx_CyFunction_Defaults(__pyx_defaults1, __pyx_self)->__pyx_arg_retries);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
@@ -4488,7 +4490,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_5send(PyObject *__py
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_data)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("send", 0, 2, 3, 1); __PYX_ERR(0, 291, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("send", 0, 2, 3, 1); __PYX_ERR(0, 330, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -4497,7 +4499,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_5send(PyObject *__py
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "send") < 0)) __PYX_ERR(0, 291, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "send") < 0)) __PYX_ERR(0, 330, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4514,7 +4516,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_5send(PyObject *__py
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("send", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 291, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("send", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 330, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Channel.send", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4536,7 +4538,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("send", 0);
 
-  /* "helium_client/_helium.pyx":305
+  /* "helium_client/_helium.pyx":344
  * 
  *         """
  *         return self._helium._channel_send(self._channel_id, data,             # <<<<<<<<<<<<<<
@@ -4544,14 +4546,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_helium_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_helium_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_channel_send); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_channel_send); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_channel_id_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_channel_id_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -4560,25 +4562,25 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_data);
   __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":306
+  /* "helium_client/_helium.pyx":345
  *         """
  *         return self._helium._channel_send(self._channel_id, data,
  *                                           retries=retries)             # <<<<<<<<<<<<<<
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 306, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 345, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":305
+  /* "helium_client/_helium.pyx":344
  * 
  *         """
  *         return self._helium._channel_send(self._channel_id, data,             # <<<<<<<<<<<<<<
  *                                           retries=retries)
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4587,7 +4589,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":291
+  /* "helium_client/_helium.pyx":330
  *         return cls(helium, result, channel_name=channel_name)
  * 
  *     def send(self, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -4609,7 +4611,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":308
+/* "helium_client/_helium.pyx":347
  *                                           retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -4624,12 +4626,12 @@ static PyObject *__pyx_pf_13helium_client_7_helium_8__defaults__(CYTHON_UNUSED P
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("__defaults__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__Pyx_CyFunction_Defaults(__pyx_defaults2, __pyx_self)->__pyx_arg_retries);
   __Pyx_GIVEREF(__Pyx_CyFunction_Defaults(__pyx_defaults2, __pyx_self)->__pyx_arg_retries);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __Pyx_CyFunction_Defaults(__pyx_defaults2, __pyx_self)->__pyx_arg_retries);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
@@ -4655,7 +4657,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_8__defaults__(CYTHON_UNUSED P
 
 /* Python wrapper */
 static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_7poll(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_13helium_client_7_helium_7Channel_6poll[] = "Channel.poll(self, token, retries=POLL_RETRIES_5S)\nPoll a channel for a result.\n\n        Args:\n\n            token (:obj:`int`): The token to check a result for.\n\n            retries (:obj:`int`, optional): The number of times to retry\n                waiting for a response (defaults to about 5 seconds).\n\n        Returns:\n\n            The response of the channel if successful. An exception is\n            raised otherwise.\n\n        Raises:\n\n            :class:`.HeliumError`: A HeliumError or subclass\n                representing the error that occurred\n\n        ";
+static char __pyx_doc_13helium_client_7_helium_7Channel_6poll[] = "Channel.poll(self, token, retries=POLL_RETRIES_5S)\nPoll a channel for a result.\n\n        Args:\n\n            token (:obj:`int`): The token to check a result for.\n\n            retries (:obj:`int`, optional): The number of times to retry\n                waiting for a response (defaults to about 5 seconds).\n\n        Returns:\n\n            The response of the channel if successful. An exception is\n            raised otherwise.\n\n            For the :meth:`.create`` method this response will be the\n            channel id of the created channel. For other channel\n            methods the response will be ``0`` if successful. On any\n            error a :class:`.ChannelError` is raised.\n\n        Raises:\n\n            :class:`.HeliumError`: A HeliumError or subclass\n                representing the error that occurred\n\n        ";
 static PyMethodDef __pyx_mdef_13helium_client_7_helium_7Channel_7poll = {"poll", (PyCFunction)__pyx_pw_13helium_client_7_helium_7Channel_7poll, METH_VARARGS|METH_KEYWORDS, __pyx_doc_13helium_client_7_helium_7Channel_6poll};
 static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_7poll(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
@@ -4687,7 +4689,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_7poll(PyObject *__py
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_token)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("poll", 0, 2, 3, 1); __PYX_ERR(0, 308, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("poll", 0, 2, 3, 1); __PYX_ERR(0, 347, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -4696,7 +4698,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_7poll(PyObject *__py
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "poll") < 0)) __PYX_ERR(0, 308, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "poll") < 0)) __PYX_ERR(0, 347, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4713,7 +4715,7 @@ static PyObject *__pyx_pw_13helium_client_7_helium_7Channel_7poll(PyObject *__py
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("poll", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 308, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("poll", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 347, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("helium_client._helium.Channel.poll", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4735,7 +4737,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_6poll(CYTHON_UNUSED 
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("poll", 0);
 
-  /* "helium_client/_helium.pyx":329
+  /* "helium_client/_helium.pyx":373
  * 
  *         """
  *         return self._helium._channel_response(OK, token, retries=retries)             # <<<<<<<<<<<<<<
@@ -4743,14 +4745,14 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_6poll(CYTHON_UNUSED 
  *     def __repr__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_helium_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_helium_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_channel_response); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_channel_response); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -4758,10 +4760,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_6poll(CYTHON_UNUSED 
   __Pyx_GIVEREF(__pyx_v_token);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_token);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 329, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 329, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_retries, __pyx_v_retries) < 0) __PYX_ERR(0, 373, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4770,7 +4772,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_6poll(CYTHON_UNUSED 
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":308
+  /* "helium_client/_helium.pyx":347
  *                                           retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
@@ -4792,7 +4794,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_6poll(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "helium_client/_helium.pyx":331
+/* "helium_client/_helium.pyx":375
  *         return self._helium._channel_response(OK, token, retries=retries)
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -4828,7 +4830,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("__repr__", 0);
 
-  /* "helium_client/_helium.pyx":332
+  /* "helium_client/_helium.pyx":376
  * 
  *     def __repr__(self):
  *         return '{0} <name: {1} id: {2}>'.format(self.__class__.__name__,             # <<<<<<<<<<<<<<
@@ -4836,32 +4838,32 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
  *                                                 self._channel_id)
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_0_name_1_id_2, __pyx_n_s_format); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_0_name_1_id_2, __pyx_n_s_format); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 376, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_class); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_class); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 376, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_name); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_name); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 376, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "helium_client/_helium.pyx":333
+  /* "helium_client/_helium.pyx":377
  *     def __repr__(self):
  *         return '{0} <name: {1} id: {2}>'.format(self.__class__.__name__,
  *                                                 repr(self._channel_name),             # <<<<<<<<<<<<<<
  *                                                 self._channel_id)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_channel_name_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_channel_name_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 377, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyObject_Repr(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __pyx_t_5 = PyObject_Repr(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 377, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "helium_client/_helium.pyx":334
+  /* "helium_client/_helium.pyx":378
  *         return '{0} <name: {1} id: {2}>'.format(self.__class__.__name__,
  *                                                 repr(self._channel_name),
  *                                                 self._channel_id)             # <<<<<<<<<<<<<<
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_channel_id_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_channel_id_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_6 = NULL;
   __pyx_t_7 = 0;
@@ -4878,7 +4880,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_t_4, __pyx_t_5, __pyx_t_3};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -4889,7 +4891,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_t_4, __pyx_t_5, __pyx_t_3};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -4898,7 +4900,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 332, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (__pyx_t_6) {
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -4912,7 +4914,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
     __pyx_t_4 = 0;
     __pyx_t_5 = 0;
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
@@ -4921,7 +4923,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_8__repr__(CYTHON_UNU
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "helium_client/_helium.pyx":331
+  /* "helium_client/_helium.pyx":375
  *         return self._helium._channel_response(OK, token, retries=retries)
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -5273,6 +5275,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Represents_a_failure_communicati, __pyx_k_Represents_a_failure_communicati, sizeof(__pyx_k_Represents_a_failure_communicati), 0, 0, 1, 0},
   {&__pyx_kp_s_Represents_a_failure_getting_dat, __pyx_k_Represents_a_failure_getting_dat, sizeof(__pyx_k_Represents_a_failure_getting_dat), 0, 0, 1, 0},
   {&__pyx_kp_s_Represents_an_error_response_for, __pyx_k_Represents_an_error_response_for, sizeof(__pyx_k_Represents_an_error_response_for), 0, 0, 1, 0},
+  {&__pyx_kp_s_Represents_information_about_a_H, __pyx_k_Represents_information_about_a_H, sizeof(__pyx_k_Represents_information_about_a_H), 0, 0, 1, 0},
   {&__pyx_kp_s_Represents_not_being_connected_t, __pyx_k_Represents_not_being_connected_t, sizeof(__pyx_k_Represents_not_being_connected_t), 0, 0, 1, 0},
   {&__pyx_kp_s_Represents_pending_data_for_the, __pyx_k_Represents_pending_data_for_the, sizeof(__pyx_k_Represents_pending_data_for_the), 0, 0, 1, 0},
   {&__pyx_kp_s_Represents_the_request_being_dro, __pyx_k_Represents_the_request_being_dro, sizeof(__pyx_k_Represents_the_request_being_dro), 0, 0, 1, 0},
@@ -5342,7 +5345,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_object = __Pyx_GetBuiltinName(__pyx_n_s_object); if (!__pyx_builtin_object) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_builtin_object = __Pyx_GetBuiltinName(__pyx_n_s_object); if (!__pyx_builtin_object) __PYX_ERR(0, 275, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -5352,124 +5355,124 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "helium_client/_helium.pyx":212
+  /* "helium_client/_helium.pyx":248
  *             status = channel_poll_result(&self._ctx, token, &result, retries)
  * 
  *         def _check_result_details():             # <<<<<<<<<<<<<<
  *             if result >= 0:
  *                 return result
  */
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_check_result_details, 212, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_check_result_details, 248, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 248, __pyx_L1_error)
 
   /* "helium_client/_helium.pyx":19
  * 
  * 
  * class Info(namedtuple('Info', 'mac uptime time fw_version radio_count')):             # <<<<<<<<<<<<<<
- *     __slots__ = ()
+ *     """Represents information about a Helium Atom.
  * 
  */
   __pyx_tuple__7 = PyTuple_Pack(2, __pyx_n_s_Info, __pyx_kp_s_mac_uptime_time_fw_version_radio); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "helium_client/_helium.pyx":22
+  /* "helium_client/_helium.pyx":47
  *     __slots__ = ()
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         template = "Helium <mac: {:08x} version: {:04x}>"
  *         return template.format(self.mac, self.fw_version)
  */
-  __pyx_tuple__8 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_template); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_template); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_repr, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_repr, 47, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 47, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":82
+  /* "helium_client/_helium.pyx":108
  * 
  * 
  * def _error_for(status, message=None):             # <<<<<<<<<<<<<<
  *     klazz = error_classes.get(status, None)
  *     if klazz is None:
  */
-  __pyx_tuple__10 = PyTuple_Pack(3, __pyx_n_s_status, __pyx_n_s_message, __pyx_n_s_klazz); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(3, __pyx_n_s_status, __pyx_n_s_message, __pyx_n_s_klazz); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_error_for, 82, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_error_for, 108, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 108, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":89
+  /* "helium_client/_helium.pyx":115
  * 
  * 
  * def _check_result(self, status, builder=None, message=None):             # <<<<<<<<<<<<<<
  *     if status == OK:
  *         return None if builder is None else builder()
  */
-  __pyx_tuple__12 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_status, __pyx_n_s_builder, __pyx_n_s_message); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_status, __pyx_n_s_builder, __pyx_n_s_message); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_check_result, 89, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_check_result, 115, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 115, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":247
+  /* "helium_client/_helium.pyx":283
  *     """
  * 
  *     def __init__(self, helium, channel_id, channel_name=None):             # <<<<<<<<<<<<<<
  *         self._helium = helium
  *         self._channel_id = channel_id
  */
-  __pyx_tuple__14 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_helium, __pyx_n_s_channel_id, __pyx_n_s_channel_name); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 247, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_helium, __pyx_n_s_channel_id, __pyx_n_s_channel_name); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_init, 247, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 247, __pyx_L1_error)
-  __pyx_tuple__16 = PyTuple_Pack(1, ((PyObject *)Py_None)); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 247, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_init, 283, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 283, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(1, ((PyObject *)Py_None)); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
 
-  /* "helium_client/_helium.pyx":253
+  /* "helium_client/_helium.pyx":289
  * 
  *     @classmethod
  *     def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Create a channel.
  * 
  */
-  __pyx_tuple__17 = PyTuple_Pack(5, __pyx_n_s_cls, __pyx_n_s_helium, __pyx_n_s_channel_name, __pyx_n_s_retries, __pyx_n_s_result); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_tuple__17 = PyTuple_Pack(5, __pyx_n_s_cls, __pyx_n_s_helium, __pyx_n_s_channel_name, __pyx_n_s_retries, __pyx_n_s_result); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(4, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_create, 253, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(4, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_create, 289, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 289, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":291
+  /* "helium_client/_helium.pyx":330
  *         return cls(helium, result, channel_name=channel_name)
  * 
  *     def send(self, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Send data on a channel.
  * 
  */
-  __pyx_tuple__19 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_data, __pyx_n_s_retries); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_tuple__19 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_data, __pyx_n_s_retries); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_send, 291, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_send, 330, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 330, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":308
+  /* "helium_client/_helium.pyx":347
  *                                           retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Poll a channel for a result.
  * 
  */
-  __pyx_tuple__21 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_token, __pyx_n_s_retries); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_tuple__21 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_token, __pyx_n_s_retries); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_poll, 308, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_poll, 347, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 347, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":331
+  /* "helium_client/_helium.pyx":375
  *         return self._helium._channel_response(OK, token, retries=retries)
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         return '{0} <name: {1} id: {2}>'.format(self.__class__.__name__,
  *                                                 repr(self._channel_name),
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_repr, 331, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_repr, 375, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5572,14 +5575,14 @@ PyMODINIT_FUNC PyInit__helium(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_13helium_client_7_helium_Helium) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_13helium_client_7_helium_Helium) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
   __pyx_type_13helium_client_7_helium_Helium.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Helium", (PyObject *)&__pyx_type_13helium_client_7_helium_Helium) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "Helium", (PyObject *)&__pyx_type_13helium_client_7_helium_Helium) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
   __pyx_ptype_13helium_client_7_helium_Helium = &__pyx_type_13helium_client_7_helium_Helium;
-  if (PyType_Ready(&__pyx_type_13helium_client_7_helium___pyx_scope_struct__info) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_13helium_client_7_helium___pyx_scope_struct__info) < 0) __PYX_ERR(0, 145, __pyx_L1_error)
   __pyx_type_13helium_client_7_helium___pyx_scope_struct__info.tp_print = 0;
   __pyx_ptype_13helium_client_7_helium___pyx_scope_struct__info = &__pyx_type_13helium_client_7_helium___pyx_scope_struct__info;
-  if (PyType_Ready(&__pyx_type_13helium_client_7_helium___pyx_scope_struct_1__channel_response) < 0) __PYX_ERR(0, 204, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_13helium_client_7_helium___pyx_scope_struct_1__channel_response) < 0) __PYX_ERR(0, 240, __pyx_L1_error)
   __pyx_type_13helium_client_7_helium___pyx_scope_struct_1__channel_response.tp_print = 0;
   __pyx_ptype_13helium_client_7_helium___pyx_scope_struct_1__channel_response = &__pyx_type_13helium_client_7_helium___pyx_scope_struct_1__channel_response;
   /*--- Type import code ---*/
@@ -5615,7 +5618,7 @@ PyMODINIT_FUNC PyInit__helium(void)
  * 
  * 
  * class Info(namedtuple('Info', 'mac uptime time fw_version radio_count')):             # <<<<<<<<<<<<<<
- *     __slots__ = ()
+ *     """Represents information about a Helium Atom.
  * 
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_namedtuple); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
@@ -5630,35 +5633,35 @@ PyMODINIT_FUNC PyInit__helium(void)
   __pyx_t_1 = 0;
   __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_Info, __pyx_n_s_Info, (PyObject *) NULL, __pyx_n_s_helium_client__helium, (PyObject *) NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_Info, __pyx_n_s_Info, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_information_about_a_H); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "helium_client/_helium.pyx":20
+  /* "helium_client/_helium.pyx":45
  * 
- * class Info(namedtuple('Info', 'mac uptime time fw_version radio_count')):
+ *     """
  *     __slots__ = ()             # <<<<<<<<<<<<<<
  * 
  *     def __repr__(self):
  */
-  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_slots, __pyx_empty_tuple) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_slots, __pyx_empty_tuple) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
 
-  /* "helium_client/_helium.pyx":22
+  /* "helium_client/_helium.pyx":47
  *     __slots__ = ()
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         template = "Helium <mac: {:08x} version: {:04x}>"
  *         return template.format(self.mac, self.fw_version)
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_4Info_1__repr__, 0, __pyx_n_s_Info___repr, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_4Info_1__repr__, 0, __pyx_n_s_Info___repr, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_repr, __pyx_t_4) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_repr, __pyx_t_4) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "helium_client/_helium.pyx":19
  * 
  * 
  * class Info(namedtuple('Info', 'mac uptime time fw_version radio_count')):             # <<<<<<<<<<<<<<
- *     __slots__ = ()
+ *     """Represents information about a Helium Atom.
  * 
  */
   __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_Info, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
@@ -5669,482 +5672,482 @@ PyMODINIT_FUNC PyInit__helium(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":27
+  /* "helium_client/_helium.pyx":52
  * 
  * 
  * class HeliumError(Exception):             # <<<<<<<<<<<<<<
  *     """The base error class for Helium related errors."""
  *     pass
  */
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
   __Pyx_GIVEREF(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
   PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
-  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_HeliumError, __pyx_n_s_HeliumError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_The_base_error_class_for_Helium); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_HeliumError, __pyx_n_s_HeliumError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_The_base_error_class_for_Helium); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_HeliumError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_HeliumError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HeliumError, __pyx_t_4) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_HeliumError, __pyx_t_4) < 0) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":32
+  /* "helium_client/_helium.pyx":57
  * 
  * 
  * class NoDataError(HeliumError):             # <<<<<<<<<<<<<<
  *     """Represents a failure getting data for a channel request."""
  *     pass
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_NoDataError, __pyx_n_s_NoDataError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_a_failure_getting_dat); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_NoDataError, __pyx_n_s_NoDataError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_a_failure_getting_dat); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_NoDataError, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_NoDataError, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NoDataError, __pyx_t_4) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NoDataError, __pyx_t_4) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":37
+  /* "helium_client/_helium.pyx":62
  * 
  * 
  * class CommunicationError(HeliumError):             # <<<<<<<<<<<<<<
  *     """Represents a failure communicating with the Helium atom."""
  *     pass
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_CommunicationError, __pyx_n_s_CommunicationError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_a_failure_communicati); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_CommunicationError, __pyx_n_s_CommunicationError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_a_failure_communicati); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_CommunicationError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_CommunicationError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CommunicationError, __pyx_t_4) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CommunicationError, __pyx_t_4) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":42
+  /* "helium_client/_helium.pyx":67
  * 
  * 
  * class NotConnectedError(HeliumError):             # <<<<<<<<<<<<<<
  *     """Represents not being connected to the network."""
  *     pass
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_NotConnectedError, __pyx_n_s_NotConnectedError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_not_being_connected_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_NotConnectedError, __pyx_n_s_NotConnectedError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_not_being_connected_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_NotConnectedError, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_NotConnectedError, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NotConnectedError, __pyx_t_4) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NotConnectedError, __pyx_t_4) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":47
+  /* "helium_client/_helium.pyx":72
  * 
  * 
  * class DroppedError(HeliumError):             # <<<<<<<<<<<<<<
  *     """Represents the request being dropped by the Helium Atom.
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_DroppedError, __pyx_n_s_DroppedError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_the_request_being_dro); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_DroppedError, __pyx_n_s_DroppedError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_the_request_being_dro); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_DroppedError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_DroppedError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DroppedError, __pyx_t_4) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DroppedError, __pyx_t_4) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":58
+  /* "helium_client/_helium.pyx":84
  * 
  * 
  * class KeepAwakeError(HeliumError):             # <<<<<<<<<<<<<<
  *     """Represents pending data for the Helium Atom.
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_KeepAwakeError, __pyx_n_s_KeepAwakeError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_pending_data_for_the); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_KeepAwakeError, __pyx_n_s_KeepAwakeError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_pending_data_for_the); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_KeepAwakeError, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_KeepAwakeError, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_KeepAwakeError, __pyx_t_4) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_KeepAwakeError, __pyx_t_4) < 0) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":68
+  /* "helium_client/_helium.pyx":94
  * 
  * 
  * class ChannelError(HeliumError):             # <<<<<<<<<<<<<<
  *     """Represents an error response for a channel request."""
  *     pass
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_HeliumError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_ChannelError, __pyx_n_s_ChannelError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_an_error_response_for); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_ChannelError, __pyx_n_s_ChannelError, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Represents_an_error_response_for); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_ChannelError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_ChannelError, __pyx_t_2, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ChannelError, __pyx_t_4) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ChannelError, __pyx_t_4) < 0) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":74
+  /* "helium_client/_helium.pyx":100
  * 
  * error_classes = {
  *     OK_NO_DATA:         NoDataError,             # <<<<<<<<<<<<<<
  *     ERR_DROPPED:        DroppedError,
  *     ERR_COMMUNICATION:  CommunicationError,
  */
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK_NO_DATA); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_OK_NO_DATA); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_NoDataError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_NoDataError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_t_1, __pyx_t_3) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_t_1, __pyx_t_3) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "helium_client/_helium.pyx":75
+  /* "helium_client/_helium.pyx":101
  * error_classes = {
  *     OK_NO_DATA:         NoDataError,
  *     ERR_DROPPED:        DroppedError,             # <<<<<<<<<<<<<<
  *     ERR_COMMUNICATION:  CommunicationError,
  *     ERR_NOT_CONNECTED:  NotConnectedError,
  */
-  __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_DROPPED); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_DROPPED); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_DroppedError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_DroppedError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_t_3, __pyx_t_1) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_t_3, __pyx_t_1) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":76
+  /* "helium_client/_helium.pyx":102
  *     OK_NO_DATA:         NoDataError,
  *     ERR_DROPPED:        DroppedError,
  *     ERR_COMMUNICATION:  CommunicationError,             # <<<<<<<<<<<<<<
  *     ERR_NOT_CONNECTED:  NotConnectedError,
  *     ERR_KEEP_AWAKE:     KeepAwakeError
  */
-  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_COMMUNICATION); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_COMMUNICATION); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_CommunicationError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_CommunicationError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 102, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_t_1, __pyx_t_3) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_t_1, __pyx_t_3) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "helium_client/_helium.pyx":77
+  /* "helium_client/_helium.pyx":103
  *     ERR_DROPPED:        DroppedError,
  *     ERR_COMMUNICATION:  CommunicationError,
  *     ERR_NOT_CONNECTED:  NotConnectedError,             # <<<<<<<<<<<<<<
  *     ERR_KEEP_AWAKE:     KeepAwakeError
  * }
  */
-  __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_NOT_CONNECTED); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_NOT_CONNECTED); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_NotConnectedError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_NotConnectedError); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_t_3, __pyx_t_1) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_t_3, __pyx_t_1) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "helium_client/_helium.pyx":78
+  /* "helium_client/_helium.pyx":104
  *     ERR_COMMUNICATION:  CommunicationError,
  *     ERR_NOT_CONNECTED:  NotConnectedError,
  *     ERR_KEEP_AWAKE:     KeepAwakeError             # <<<<<<<<<<<<<<
  * }
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_KEEP_AWAKE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_enum__helium_status(helium_status_ERR_KEEP_AWAKE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "helium_client/_helium.pyx":79
+  /* "helium_client/_helium.pyx":105
  *     ERR_NOT_CONNECTED:  NotConnectedError,
  *     ERR_KEEP_AWAKE:     KeepAwakeError
  * }             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_KeepAwakeError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_KeepAwakeError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_t_1, __pyx_t_3) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_t_1, __pyx_t_3) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_error_classes, __pyx_t_2) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_error_classes, __pyx_t_2) < 0) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":82
+  /* "helium_client/_helium.pyx":108
  * 
  * 
  * def _error_for(status, message=None):             # <<<<<<<<<<<<<<
  *     klazz = error_classes.get(status, None)
  *     if klazz is None:
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_1_error_for, NULL, __pyx_n_s_helium_client__helium); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_1_error_for, NULL, __pyx_n_s_helium_client__helium); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_error_for, __pyx_t_2) < 0) __PYX_ERR(0, 82, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_error_for, __pyx_t_2) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":89
+  /* "helium_client/_helium.pyx":115
  * 
  * 
  * def _check_result(self, status, builder=None, message=None):             # <<<<<<<<<<<<<<
  *     if status == OK:
  *         return None if builder is None else builder()
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_3_check_result, NULL, __pyx_n_s_helium_client__helium); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_3_check_result, NULL, __pyx_n_s_helium_client__helium); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_check_result, __pyx_t_2) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_check_result, __pyx_t_2) < 0) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":124
+  /* "helium_client/_helium.pyx":160
  *         return _check_result(self, status, lambda: Info(**info))
  * 
  *     def connect(self, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Connect to the network.
  * 
  */
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_k_ = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":195
+  /* "helium_client/_helium.pyx":231
  *             close_serial_port(fd)
  * 
  *     def create_channel(self, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Create a :class:`.Channel` for a given name.
  * 
  */
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 195, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_k__2 = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":204
+  /* "helium_client/_helium.pyx":240
  *         return Channel.create(self, channel_name, retries=retries)
  * 
  *     def _channel_response(self, status, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         if retries is None:
  *             return _check_result(self, status, lambda: token)
  */
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 204, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_k__3 = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":220
+  /* "helium_client/_helium.pyx":256
  *         return _check_result(self, status, _check_result_details)
  * 
  *     def _channel_create(self, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         cdef uint16_t token
  *         cdef int status = channel_create(&self._ctx, channel_name, len(channel_name), &token)
  */
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_k__5 = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":225
+  /* "helium_client/_helium.pyx":261
  *         return self._channel_response(status, token, retries=retries)
  * 
  *     def _channel_send(self, channel_id, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         cdef uint16_t token
  *         cdef char * data_bytes = data
  */
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_k__6 = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "helium_client/_helium.pyx":239
+  /* "helium_client/_helium.pyx":275
  * 
  * 
  * class Channel(object):             # <<<<<<<<<<<<<<
  *     """Send and receive data to IoT back-end channels.
  * 
  */
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 275, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_builtin_object);
   __Pyx_GIVEREF(__pyx_builtin_object);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_builtin_object);
-  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 275, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_2, __pyx_n_s_Channel, __pyx_n_s_Channel, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Send_and_receive_data_to_IoT_bac); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_2, __pyx_n_s_Channel, __pyx_n_s_Channel, (PyObject *) NULL, __pyx_n_s_helium_client__helium, __pyx_kp_s_Send_and_receive_data_to_IoT_bac); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 275, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "helium_client/_helium.pyx":247
+  /* "helium_client/_helium.pyx":283
  *     """
  * 
  *     def __init__(self, helium, channel_id, channel_name=None):             # <<<<<<<<<<<<<<
  *         self._helium = helium
  *         self._channel_id = channel_id
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_1__init__, 0, __pyx_n_s_Channel___init, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_1__init__, 0, __pyx_n_s_Channel___init, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__16);
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 247, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "helium_client/_helium.pyx":253
+  /* "helium_client/_helium.pyx":289
  * 
  *     @classmethod
  *     def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Create a channel.
  * 
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_3create, __Pyx_CYFUNCTION_CLASSMETHOD, __pyx_n_s_Channel_create, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__18)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_3create, __Pyx_CYFUNCTION_CLASSMETHOD, __pyx_n_s_Channel_create, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__18)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_4, sizeof(__pyx_defaults), 1)) __PYX_ERR(0, 253, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_4, sizeof(__pyx_defaults), 1)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_CyFunction_Defaults(__pyx_defaults, __pyx_t_4)->__pyx_arg_retries = __pyx_t_5;
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
   __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_4, __pyx_pf_13helium_client_7_helium_4__defaults__);
 
-  /* "helium_client/_helium.pyx":252
+  /* "helium_client/_helium.pyx":288
  *         self._channel_name = channel_name
  * 
  *     @classmethod             # <<<<<<<<<<<<<<
  *     def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):
  *         """Create a channel.
  */
-  __pyx_t_5 = __Pyx_Method_ClassMethod(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_Method_ClassMethod(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_create, __pyx_t_5) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_create, __pyx_t_5) < 0) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "helium_client/_helium.pyx":291
+  /* "helium_client/_helium.pyx":330
  *         return cls(helium, result, channel_name=channel_name)
  * 
  *     def send(self, data, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Send data on a channel.
  * 
  */
-  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_5send, 0, __pyx_n_s_Channel_send, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_5send, 0, __pyx_n_s_Channel_send, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_5, sizeof(__pyx_defaults1), 1)) __PYX_ERR(0, 291, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 291, __pyx_L1_error)
+  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_5, sizeof(__pyx_defaults1), 1)) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_CyFunction_Defaults(__pyx_defaults1, __pyx_t_5)->__pyx_arg_retries = __pyx_t_4;
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
   __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_5, __pyx_pf_13helium_client_7_helium_6__defaults__);
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_send, __pyx_t_5) < 0) __PYX_ERR(0, 291, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_send, __pyx_t_5) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "helium_client/_helium.pyx":308
+  /* "helium_client/_helium.pyx":347
  *                                           retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Poll a channel for a result.
  * 
  */
-  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_7poll, 0, __pyx_n_s_Channel_poll, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_7poll, 0, __pyx_n_s_Channel_poll, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_5, sizeof(__pyx_defaults2), 1)) __PYX_ERR(0, 308, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 308, __pyx_L1_error)
+  if (!__Pyx_CyFunction_InitDefaults(__pyx_t_5, sizeof(__pyx_defaults2), 1)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(HELIUM_POLL_RETRIES_5S); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_CyFunction_Defaults(__pyx_defaults2, __pyx_t_5)->__pyx_arg_retries = __pyx_t_4;
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
   __Pyx_CyFunction_SetDefaultsGetter(__pyx_t_5, __pyx_pf_13helium_client_7_helium_8__defaults__);
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_poll, __pyx_t_5) < 0) __PYX_ERR(0, 308, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_poll, __pyx_t_5) < 0) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "helium_client/_helium.pyx":331
+  /* "helium_client/_helium.pyx":375
  *         return self._helium._channel_response(OK, token, retries=retries)
  * 
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         return '{0} <name: {1} id: {2}>'.format(self.__class__.__name__,
  *                                                 repr(self._channel_name),
  */
-  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_9__repr__, 0, __pyx_n_s_Channel___repr, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_13helium_client_7_helium_7Channel_9__repr__, 0, __pyx_n_s_Channel___repr, NULL, __pyx_n_s_helium_client__helium, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_repr, __pyx_t_5) < 0) __PYX_ERR(0, 331, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_repr, __pyx_t_5) < 0) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "helium_client/_helium.pyx":239
+  /* "helium_client/_helium.pyx":275
  * 
  * 
  * class Channel(object):             # <<<<<<<<<<<<<<
  *     """Send and receive data to IoT back-end channels.
  * 
  */
-  __pyx_t_5 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_n_s_Channel, __pyx_t_2, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_n_s_Channel, __pyx_t_2, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 275, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Channel, __pyx_t_5) < 0) __PYX_ERR(0, 239, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Channel, __pyx_t_5) < 0) __PYX_ERR(0, 275, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;

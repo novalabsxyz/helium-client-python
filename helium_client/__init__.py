@@ -3,6 +3,7 @@
 from ._helium import (
     Helium,
     Channel,
+    Info,
     HeliumError,
     NoDataError,
     CommunicationError,
@@ -17,6 +18,7 @@ del get_versions
 
 __all__ = (
     'Helium',
+    'Info',
     'Channel',
     'HeliumError',
     'NoDataError',

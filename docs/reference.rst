@@ -8,6 +8,11 @@ Helium
 .. autoclass:: helium_client.Helium
    :members:
 
+Info
+~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: helium_client.Info
+
 
 Channel
 --------------------
