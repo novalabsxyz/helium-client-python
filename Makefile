@@ -1,5 +1,5 @@
 PROJECT=helium_client
-LIB_HELIUM_CLIENT=${PROJECT}.so
+LIB_HELIUM_CLIENT=${PROJECT}/_helium.so
 
 all: ${LIB_HELIUM_CLIENT}
 
@@ -8,19 +8,36 @@ ci: all
 
 .PHONY: install
 install: ${LIB_HELIUM_CLIENT}
-	python setup.py install
+	pip install -e .
 
 .PHONY: uninstall
 uninstall:
-	pip uninstall -y -q ${PROJECT}
+	pip uninstall ${PROJECT}
 
-src/${PROJECT}.c: src/c${PROJECT}.pxd src/${PROJECT}.pyx
-	cython -I helium-client src/${PROJECT}.pyx -o src/${PROJECT}.c
+helium_client/_helium.c: helium_client/_helium.pxd helium_client/_helium.pyx
+	cython -I helium-client helium_client/_helium.pyx -o helium_client/_helium.c
 
 .PHONY: ${LIB_HELIUM_CLIENT}
-${LIB_HELIUM_CLIENT}: src/${PROJECT}.c
-	python setup.py build_ext --inplace
+${LIB_HELIUM_CLIENT}: helium_client/_helium.c
+	python setup.py build_ext -i
+
+.PHONY: docs
+docs: ${LIB_HELIUM_CLIENT}
+	$(MAKE) -C docs clean html
+
+.PHONY: gh-pages
+gh-pages: docs
+	rm -rf gh-pages
+	git worktree prune
+	git worktree add gh-pages -B gh-pages origin/gh-pages
+	rm -rf gh-pages/*
+	touch gh-pages/.nojekyll
+	mv docs/_build/html/* gh-pages
+	cd gh-pages; git add .; git commit -m "Generate docs"; git push origin gh-pages
+	rm -rf gh-pages
+	git worktree prune
 
 .PHONY: clean
 clean:
-	rm -rf build ${LIB_HELIUM_CLIENT}
+	$(MAKE) -C docs clean
+	rm -rf build ${LIB_HELIUM_CLIENT} *.pyc ${PROJECT}/*.pyc
