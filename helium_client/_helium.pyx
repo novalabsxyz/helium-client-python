@@ -105,6 +105,8 @@ error_classes = {
 }
 
 
+POLL_RETRIES_5S = _POLL_RETRIES_5S
+
 def _error_for(status, message=None):
     klazz = error_classes.get(status, None)
     if klazz is None:

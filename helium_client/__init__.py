@@ -4,6 +4,7 @@ from ._helium import (
     Helium,
     Channel,
     Info,
+    POLL_RETRIES_5S,
     HeliumError,
     NoDataError,
     CommunicationError,
@@ -18,6 +19,7 @@ del get_versions
 
 __all__ = (
     'Helium',
+    'POLL_RETRIES_5S'
     'Info',
     'Channel',
     'HeliumError',

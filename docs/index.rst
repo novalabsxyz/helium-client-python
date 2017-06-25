@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-helium-client-python
+Overview
 ====================
 
 helium-client-python is a wrapper around the `helium-client
