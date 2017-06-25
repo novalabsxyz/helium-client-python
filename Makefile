@@ -29,7 +29,6 @@ ${LIB_HELIUM_CLIENT}: helium_client/_helium.c
 
 .PHONY: version
 version: check_dirty check_version
-	git commit -am "Making library version: ${VERSION}"
 	git tag -as -m "Version ${VERSION}" ${VERSION}
 	git push origin master --tags
 
