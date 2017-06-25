@@ -29,6 +29,7 @@
 
 import os
 import sys
+sys.path.insert(0, os.path.abspath('../../')) # for RTD
 sys.path.insert(0, os.path.abspath('..'))
 
 # Add any Sphinx extension module names here, as strings. They can be
