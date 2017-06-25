@@ -25,6 +25,18 @@ ${LIB_HELIUM_CLIENT}: helium_client/_helium.c
 docs: ${LIB_HELIUM_CLIENT}
 	$(MAKE) -C docs clean html
 
+.PHONY: gh-pages
+gh-pages: docs
+	rm -rf gh-pages
+	git worktree prune
+	git worktree add gh-pages -B gh-pages origin/gh-pages
+	rm -rf gh-pages/*
+	touch gh-pages/.nojekyll
+	mv docs/_build/html/* gh-pages
+	cd gh-pages; git add .; git commit -m "Generate docs"; git push origin gh-pages
+	rm -rf gh-pages
+	git worktree prune
+
 .PHONY: clean
 clean:
 	$(MAKE) -C docs clean
