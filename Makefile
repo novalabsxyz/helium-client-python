@@ -36,6 +36,7 @@ version: check_dirty check_version
 .PHONY: docs
 docs: ${LIB_HELIUM_CLIENT}
 	$(MAKE) -C docs clean html
+	touch docs/_build/html/.nojekyll
 
 
 .PHONY: clean
