@@ -28,4 +28,5 @@ deploy:
     local_dir: $TRAVIS_BUILD_DIR/docs/_build/html
     on:
       repo: helium/helium-client-python
+      tags: true
       python: "2.7"
