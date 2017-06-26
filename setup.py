@@ -27,7 +27,7 @@ def get_ext_modules():
 
 
 setup(
-    name='helium-client-python',
+    name='helium_client',
     version=versioneer.get_version(),
     author='Helium',
     author_email='info@helium.com',
