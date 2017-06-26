@@ -41,7 +41,6 @@ docs: ${LIB_HELIUM_CLIENT}
 
 .PHONY: clean
 clean:
-	$(MAKE) -C docs clean
 	rm -rf build ${LIB_HELIUM_CLIENT} *.pyc ${PROJECT}/*.pyc
 
 
