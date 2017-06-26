@@ -1,8 +1,5 @@
-include helium_client/*.c
-include helium_client/*.pxd
-include helium_client/helium-client
+recursive-include helium_client/ *
 include README.md
 include LICENCE.txt
 include versioneer.py
-include helium_client/_version.py
 
