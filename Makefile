@@ -18,7 +18,8 @@ uninstall:
 	pip uninstall ${PROJECT}
 
 
-helium_client/_helium.c: helium_client/_helium.pxd helium_client/_helium.pyx
+.PHONY: cython
+cython: helium_client/_helium.pxd helium_client/_helium.pyx
 	cython -I helium-client helium_client/_helium.pyx -o helium_client/_helium.c
 
 
