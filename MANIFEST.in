@@ -1,4 +1,4 @@
-recursive-include helium_client/ *
+recursive-include helium_client *
 include README.md
 include LICENCE.txt
 include versioneer.py
