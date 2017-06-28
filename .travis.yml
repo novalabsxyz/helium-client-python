@@ -32,6 +32,7 @@ deploy:
       python: "2.7"
   - provider: pypi
     skip_cleanup: true
+    skip_upload_docs: true
     user: madninja
     password:
       secure: "cHa447clCqcmNBPhZR4ET9I2QKZ7AnXTKEQbjtfUHweYITF7DC8VIvaZ6/JcfbRyXDCoRFEAAw0WGsPUCLeiJT2Ruk4DhLFY04JWrQqD80voRaQCUTNReRloh5abKM8cOvVOiPOL2DNHFIj3arZH3s21wcXdqtT4fhthnaRpGZKNVLBUR/3ylwBTLDSgElpTU36YG4skrD/gI+ZtFzrbaJvCo8qm2L9LMjT6SFGCT6kF1xiup+v+OTf24i8i5464asfeah1apqyQ4fePCeg7CdGDVI8ITG3qI49vUfTiAXzuPJ6sfxh4dbELPl8f7f3VIe0u4OJgeoqbiVsHjEOcPQHvLZB6dEW5USsJ/g+YBd9e+FfnHM/FSnrpRSseb9KRgDMH3KEJjCxuXhXvX6zHDabWLltJc0KUU2GHqhdLzCvjy6krvLlCaykug2/ViQG12HTiUHnBKNfQ39s24B1kuO0H3YldyGl/A5oFv3VU7ks7c3W68LB5bCyeEFY9MLvpd57XqNqjaqejpO0Xp1dBGJ0IacvG0agP7ja2Jzf4ItADpfHnlwVdmKcxdixxtPLHC6b6iHrdQvuAz+RTTWk1ygGaivXwWlAZhvFDm2/zSwf0u6Cfu/CBwok389moClg9NVD307ULwSp0KmW2akjNzogkwDvZ3ECYGGQLdyJTmd4="
