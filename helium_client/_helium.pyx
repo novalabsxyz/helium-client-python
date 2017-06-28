@@ -343,8 +343,8 @@ class Channel(object):
                 waiting for a response (defaults to about 5 seconds)
 
         """
-        return self._helium._channel_send(self._channel_id, data,
-                                          retries=retries)
+        self._helium._channel_send(self._channel_id, data,
+                                   retries=retries)
 
     def poll(self, token, retries=POLL_RETRIES_5S):
         """Poll a channel for a result.

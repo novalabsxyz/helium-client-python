@@ -35,6 +35,7 @@
 *.dSYM/
 *.su
 TAGS
+dist/
 
 # Docs
 docs/_build

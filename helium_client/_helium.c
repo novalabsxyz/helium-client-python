@@ -4543,11 +4543,10 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   /* "helium_client/_helium.pyx":346
  * 
  *         """
- *         return self._helium._channel_send(self._channel_id, data,             # <<<<<<<<<<<<<<
- *                                           retries=retries)
+ *         self._helium._channel_send(self._channel_id, data,             # <<<<<<<<<<<<<<
+ *                                    retries=retries)
  * 
  */
-  __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_helium_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_channel_send); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 346, __pyx_L1_error)
@@ -4566,8 +4565,8 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
 
   /* "helium_client/_helium.pyx":347
  *         """
- *         return self._helium._channel_send(self._channel_id, data,
- *                                           retries=retries)             # <<<<<<<<<<<<<<
+ *         self._helium._channel_send(self._channel_id, data,
+ *                                    retries=retries)             # <<<<<<<<<<<<<<
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):
  */
@@ -4578,8 +4577,8 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   /* "helium_client/_helium.pyx":346
  * 
  *         """
- *         return self._helium._channel_send(self._channel_id, data,             # <<<<<<<<<<<<<<
- *                                           retries=retries)
+ *         self._helium._channel_send(self._channel_id, data,             # <<<<<<<<<<<<<<
+ *                                    retries=retries)
  * 
  */
   __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 346, __pyx_L1_error)
@@ -4587,9 +4586,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_r = __pyx_t_4;
-  __pyx_t_4 = 0;
-  goto __pyx_L0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "helium_client/_helium.pyx":332
  *         return cls(helium, result, channel_name=channel_name)
@@ -4600,6 +4597,8 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
  */
 
   /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
@@ -4614,7 +4613,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_4send(CYTHON_UNUSED 
 }
 
 /* "helium_client/_helium.pyx":349
- *                                           retries=retries)
+ *                                    retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Poll a channel for a result.
@@ -4775,7 +4774,7 @@ static PyObject *__pyx_pf_13helium_client_7_helium_7Channel_6poll(CYTHON_UNUSED 
   goto __pyx_L0;
 
   /* "helium_client/_helium.pyx":349
- *                                           retries=retries)
+ *                                    retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Poll a channel for a result.
@@ -5454,7 +5453,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_men_git_helium_client_pyt, __pyx_n_s_send, 332, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 332, __pyx_L1_error)
 
   /* "helium_client/_helium.pyx":349
- *                                           retries=retries)
+ *                                    retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Poll a channel for a result.
@@ -6123,7 +6122,7 @@ PyMODINIT_FUNC PyInit__helium(void)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "helium_client/_helium.pyx":349
- *                                           retries=retries)
+ *                                    retries=retries)
  * 
  *     def poll(self, token, retries=POLL_RETRIES_5S):             # <<<<<<<<<<<<<<
  *         """Poll a channel for a result.
