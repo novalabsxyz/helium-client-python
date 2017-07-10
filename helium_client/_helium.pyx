@@ -144,6 +144,11 @@ cdef class Helium:
         """
         return needs_reset(&self._ctx)
 
+    def reset(self):
+        """Reset the Helium Atom."""
+        cdef int status = reset(&self._ctx)
+        return _check_result(self, status)
+
     def info(self):
         """Get information on the Helium Atom.
 

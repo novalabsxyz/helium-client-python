@@ -47,6 +47,7 @@ cdef extern from "helium-client.h":
     int connect "helium_connect"(ctx *, connection *, uint32_t)
     int connected "helium_connected"(ctx *)
     int sleep "helium_sleep"(ctx *, connection *)
+    int reset "helium_reset"(ctx *)
 
     int channel_create "helium_channel_create"(ctx *, const char *, size_t, uint16_t *)
     int channel_send "helium_channel_send"(ctx *, uint8_t, void *, size_t, uint16_t *)
