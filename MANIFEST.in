@@ -1,5 +1,5 @@
 recursive-include helium_client *
+recursive-exclude helium_client *.so *.dll 
 include README.md
 include LICENSE.txt
 include versioneer.py
-exclude *.so *.dll 
