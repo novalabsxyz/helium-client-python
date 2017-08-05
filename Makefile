@@ -25,7 +25,7 @@ cython: helium_client/_helium.pxd helium_client/_helium.pyx
 
 .PHONY: ${LIB_HELIUM_CLIENT}
 ${LIB_HELIUM_CLIENT}: helium_client/_helium.c
-	python setup.py build_ext -i
+	python setup.py build_ext
 
 
 .PHONY: version
