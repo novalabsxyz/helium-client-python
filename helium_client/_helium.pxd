@@ -85,6 +85,11 @@ cdef extern from "helium-client.h":
                                                                                int8_t *,
                                                                                uint32_t)
 
+    int channel_config_poll_invalidate "helium_channel_config_poll_invalidate"(ctx *,
+                                                                               uint8_t,
+                                                                               bool *,
+                                                                               uint32_t)
+
 cdef extern from "_serial.h":
   int open_serial_port(const char *, helium_baud)
   void close_serial_port(int)

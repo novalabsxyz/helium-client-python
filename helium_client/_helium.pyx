@@ -466,8 +466,8 @@ cdef class Config(object):
         cdef int8_t result
         cdef int status = channel_config_get(&self._helium._ctx, self._channel.id,
                                              config_key, &token)
-        response = self._channel._poll_response(status, token, self._poll_get_result_func,
-                                                retries=retries)
+        response = self._channel._poll_result(self._helium, status, token, self._poll_get_result_func,
+                                              retries=retries)
         return response.get(config_key, default)
 
     def set(self, config_key, config_value, retries=POLL_RETRIES_5S):
@@ -501,8 +501,47 @@ cdef class Config(object):
         cdef int status = channel_config_set(&self._helium._ctx, self._channel.id,
                                              config_key, self._value_config_type(config_value),
                                              <void*>value_data, &token)
-        self._channel._poll_response(status, token, self._poll_set_result_func,
-                                     retries=retries)
+        self._channel._poll_result(self._helium, status, token, self._poll_set_result_func,
+                                   retries=retries)
+
+    def poll_invalidate(self, retries=POLL_RETRIES_5S):
+        """Check for configuration invalidation.
+
+        When a global or channel configuration variable is changed in
+        the Dashboard or in the channel specific UI or API, an
+        invalidation message is queued up for the device. 
+
+        The invalidation message is delivered to the device as soon as
+        the network detects the device transmitting data of any kind.
+
+        This means that if you're sending data regularly already you
+        can set ``retries`` to 0 to avoid another network round-trip.
+
+        Args:
+
+            retries (:obj:`int`, optional): The number of times to
+                retry waiting for a response (defaults to about 5
+                seconds)
+
+        Returns:
+
+            True if the global or channel specific configuration is
+            invalid, False otherwise.
+
+        Raises:
+
+            A :class:`HeliumError` can be raised on errors. The
+            :class:`NoDataError` error is intercepted and interpreted
+            as if the configuration is not invalid.
+
+        """
+        cdef bool stale = False
+        cdef int status = channel_config_poll_invalidate(&self._helium._ctx, self._channel.id,
+                                                         &stale, retries)
+        try:
+            return _check_status(status, lambda: stale)
+        except NoDataError:
+            return False
 
     cdef helium_config_type _value_config_type(self, obj):
         if obj == None:
@@ -528,7 +567,7 @@ cdef class Config(object):
         elif type(obj) == type(True):
             (<bool*>value)[0] = obj;
         elif type(obj) == str:
-            memcpy(value, <char *>obj, strlen(<char*>value))
+            memcpy(value, <char*>obj, strlen(<char*>obj))
         else:
             raise ValueError("Values must be a string, int, float, bool or None")
 
@@ -539,7 +578,7 @@ cdef class Config(object):
         if status == OK:
             status = channel_config_get_poll_result(&helium._ctx, token, _config_get_handler,
                                                     <void *>handler_ctx, &result, retries)
-        return status, result, handler_ctx.result
+        return status, result, handler_ctx
 
     @staticmethod
     def _poll_set_result_func(Helium helium, status, token, retries=POLL_RETRIES_5S):
