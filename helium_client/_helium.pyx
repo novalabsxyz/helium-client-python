@@ -323,7 +323,7 @@ cdef class Channel(object):
         """
         cdef uint16_t token
         cdef char * data_bytes = data
-        cdef int status = channel_send(&self._helium._ctx, self.channel_id,
+        cdef int status = channel_send(&self._helium._ctx, self.id,
                                        data_bytes, len(data), &token)
         self._poll_result(self._helium, status, token, self._poll_result_func, retries=retries)
 
