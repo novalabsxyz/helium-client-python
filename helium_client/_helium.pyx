@@ -5,7 +5,7 @@
 # cython: embedsignature = True
 
 from collections import namedtuple
-from libc.string cimport strerror
+from libc.string cimport strerror, strlen, memcpy
 from libc.errno  cimport errno
 from libc.stdint cimport (
     intptr_t,
@@ -114,11 +114,10 @@ def _error_for(status, message=None):
     return klazz(message or status)
 
 
-def _check_result(self, status, builder=None, message=None):
+def _check_status(status, builder=None, message=None):
     if status == OK:
         return None if builder is None else builder()
     raise _error_for(status, message)
-
 
 cdef class Helium:
     """The main class for communicating with the Helium atom.
@@ -147,7 +146,7 @@ cdef class Helium:
     def reset(self):
         """Reset the Helium Atom."""
         cdef int status = reset(&self._ctx)
-        return _check_result(self, status)
+        return _check_status(status)
 
     def info(self):
         """Get information on the Helium Atom.
@@ -162,7 +161,7 @@ cdef class Helium:
         """
         cdef info info
         cdef int status = _info(&self._ctx, &info)
-        return _check_result(self, status, lambda: Info(**info))
+        return _check_status(status, lambda: Info(**info))
 
     def connect(self, retries=POLL_RETRIES_5S):
         """Connect to the network.
@@ -187,7 +186,7 @@ cdef class Helium:
                 error occurred.
 
         """
-        return _check_result(self, connect(&self._ctx, NULL, retries))
+        return _check_status(connect(&self._ctx, NULL, retries))
 
     def connected(self):
         """Check if the Atom is connected to the network
@@ -222,7 +221,7 @@ cdef class Helium:
                 representing the error that occurred
 
         """
-        return _check_result(self, sleep(&self._ctx, NULL))
+        return _check_status(sleep(&self._ctx, NULL))
 
     def close(self):
         """Close the port used to communicate with the Helium Atom.
@@ -244,33 +243,6 @@ cdef class Helium:
         """
         return Channel.create(self, channel_name, retries=retries)
 
-    def _channel_response(self, status, token, retries=POLL_RETRIES_5S):
-        if retries is None:
-            return _check_result(self, status, lambda: token)
-
-        cdef int8_t result
-        if status == OK:
-            status = channel_poll_result(&self._ctx, token, &result, retries)
-
-        def _check_result_details():
-            if result >= 0:
-                return result
-            else:
-                raise ChannelError(result)
-
-        return _check_result(self, status, _check_result_details)
-
-    def _channel_create(self, channel_name, retries=POLL_RETRIES_5S):
-        cdef uint16_t token
-        cdef int status = channel_create(&self._ctx, channel_name, len(channel_name), &token)
-        return self._channel_response(status, token, retries=retries)
-
-    def _channel_send(self, channel_id, data, retries=POLL_RETRIES_5S):
-        cdef uint16_t token
-        cdef char * data_bytes = data
-        cdef int status = channel_send(&self._ctx, channel_id, data_bytes, len(data), &token)
-        return self._channel_response(status, token, retries=retries)
-
     def __enter__(self):
         return self
 
@@ -279,21 +251,27 @@ cdef class Helium:
         return True
 
 
-class Channel(object):
+cdef class Channel(object):
     """Send and receive data to IoT back-end channels.
 
     A channel can be created by calling :meth:`.Channel.create` or
     using the convenience method :meth:`.Helium.create_channel`.
 
+    :ivar name: The name of the channel
+    :ivar id: The id of the channel
     """
 
-    def __init__(self, helium, channel_id, channel_name=None):
+    cdef Helium _helium
+    cdef public bytes name 
+    cdef public int8_t id 
+    
+    def __cinit__(self, Helium helium, channel_id, channel_name=None):
         self._helium = helium
-        self._channel_id = channel_id
-        self._channel_name = channel_name
+        self.id = channel_id
+        self.name = channel_name
 
     @classmethod
-    def create(cls, helium, channel_name, retries=POLL_RETRIES_5S):
+    def create(cls, Helium helium, channel_name, retries=POLL_RETRIES_5S):
         """Create a channel.
 
         Warning:
@@ -314,11 +292,7 @@ class Channel(object):
 
         Returns:
 
-            If `retries` is `None` a token representing the
-            request. Use :meth:`.poll` to fetch the channel response at a
-            later time.
-
-            A :class:`.Channel` instance if retries is not `None`. If
+            A :class:`.Channel` instance if successful. If
             an error occurred or the number of retries is exhausted a
             :class:`.HeliumError` is raised.
 
@@ -328,11 +302,10 @@ class Channel(object):
                 representing the error that occurred
 
         """
-        result = helium._channel_create(channel_name, retries=retries)
-        if retries is None:
-            return result
-
-        return cls(helium, result, channel_name=channel_name)
+        cdef uint16_t token
+        cdef int status = channel_create(&helium._ctx, channel_name, len(channel_name), &token)
+        channel_id = cls._poll_result(helium, status, token, cls._poll_result_func, retries=retries)
+        return cls(helium, channel_id, channel_name=channel_name)
 
     def send(self, data, retries=POLL_RETRIES_5S):
         """Send data on a channel.
@@ -348,10 +321,13 @@ class Channel(object):
                 waiting for a response (defaults to about 5 seconds)
 
         """
-        self._helium._channel_send(self._channel_id, data,
-                                   retries=retries)
+        cdef uint16_t token
+        cdef char * data_bytes = data
+        cdef int status = channel_send(&self._helium._ctx, self.id,
+                                       data_bytes, len(data), &token)
+        self._poll_result(self._helium, status, token, self._poll_result_func, retries=retries)
 
-    def poll(self, token, retries=POLL_RETRIES_5S):
+    def poll_result(self, token, retries=POLL_RETRIES_5S):
         """Poll a channel for a result.
 
         Args:
@@ -377,9 +353,262 @@ class Channel(object):
                 representing the error that occurred
 
         """
-        return self._helium._channel_response(OK, token, retries=retries)
+        return self._poll_result(OK, token, retries=retries)
+
+    def config(self):
+        """Get the :class:`.Config` for this channel."""
+        return Config(self, self._helium)
+
+    @staticmethod
+    def _poll_result_func(Helium helium, status, token, retries=POLL_RETRIES_5S):
+        cdef int8_t result = 0
+        if status == OK:
+            status = channel_poll_result(&helium._ctx, token, &result, retries)
+        return status, result, result
+
+    @staticmethod
+    def _poll_result(Helium helium, status, token, poll_func, retries=POLL_RETRIES_5S):
+        status, result, value = poll_func(helium, status, token, retries=retries)
+
+        def _check_status_details():
+            if result >= 0:
+                return value
+            else:
+                raise ChannelError(result)
+
+        return _check_status(status, _check_status_details)
 
     def __repr__(self):
         return '{0} <name: {1} id: {2}>'.format(self.__class__.__name__,
-                                                repr(self._channel_name),
-                                                self._channel_id)
+                                                repr(self.name),
+                                                self.channel_id)
+
+
+cdef class Config(object):
+    """Get and set global and channel specific configuration data.
+
+    Helium supports configuration variables for a given device in two
+    forms:
+
+    * Global configuration variables - Variables that are available in
+      every channel a device connects to. Global configuration
+      variables can be fetched and updated using the ``config``
+      prefix.
+
+    * Channel configuration variables - Variables that are channel
+      specific, only available if the channel supports it, and tied to
+      the lifetime of the channel. Use the ``channel`` prefix when
+      getting and setting channel configuration variables.
+
+      Channel configuration variables are mapped to the equivalent
+      constructs on the target platform if available. On Azure, for
+      example, a ``get`` is mapped to the ``desired`` state of the
+      device twin, where as a ``set`` updates the ``reported`` section
+      of the device twin.
+ 
+    Note:
+
+        Not all channels support the same constructs or both get and
+        set. Refer to the channel specific settings and documentation
+        to see how much of the configuration API is supported.
+
+    Example:
+    
+        To get a global configuration variable called ``interval``::
+    
+            config = channel.config()
+            value = config.get("config.interval")
+
+        To get a channel specific configuration variable called
+        ``color``::
+
+            config = channel.config()
+            value = config.get("channel.color")
+    
+    """
+
+    cdef Helium _helium
+    cdef Channel _channel
+
+    def __cinit__(self, Channel channel, Helium helium):
+        self._channel = channel
+        self._helium = helium
+
+    def get(self, config_key, default=None, retries=POLL_RETRIES_5S):
+        """Get a configuration variable.
+
+        Fetches the configuration value for a given key.
+
+        Args:
+
+            config_key (:obj:`str`): The key to look up.
+        
+            retries (:obj:`int`, optional): The number of times to
+                retry waiting for a response (defaults to about 5
+                seconds)
+
+        Keword Args:
+
+            default: The default value to return if the key was not found.
+
+        Returns:
+
+            The value for the given key if found, the specified
+            default if not found.
+
+        Raises:
+
+            :class:`.HeliumError`: A HeliumError or subclass
+                representing the error that occurred
+
+        """
+        cdef uint16_t token
+        cdef int8_t result
+        cdef int status = channel_config_get(&self._helium._ctx, self._channel.id,
+                                             config_key, &token)
+        response = self._channel._poll_result(self._helium, status, token, self._poll_get_result_func,
+                                              retries=retries)
+        return response.get(config_key, default)
+
+    def set(self, config_key, config_value, retries=POLL_RETRIES_5S):
+        """Set a configuration variable.
+
+        Sets a configuration variable for the given key to the given
+        value.
+
+        Args:
+
+            config_key (:obj:`str`): The key to look up.
+
+            config_value: The value to set.
+        
+            retries (:obj:`int`, optional): The number of times to
+                retry waiting for a response (defaults to about 5
+                seconds)
+
+        Raises:
+
+            :class:`.HeliumError`: A HeliumError or subclass
+                representing the error that occurred
+        
+        """
+        cdef uint16_t token
+        cdef int8_t result
+        # Get the value copied into a buffer
+        cdef int8_t value_data[100]
+        self._value_config_value(config_value, <void *>value_data)
+        # And send it up
+        cdef int status = channel_config_set(&self._helium._ctx, self._channel.id,
+                                             config_key, self._value_config_type(config_value),
+                                             <void*>value_data, &token)
+        self._channel._poll_result(self._helium, status, token, self._poll_set_result_func,
+                                   retries=retries)
+
+    def poll_invalidate(self, retries=POLL_RETRIES_5S):
+        """Check for configuration invalidation.
+
+        When a global or channel configuration variable is changed in
+        the Dashboard or in the channel specific UI or API, an
+        invalidation message is queued up for the device. 
+
+        The invalidation message is delivered to the device as soon as
+        the network detects the device transmitting data of any kind.
+
+        This means that if you're sending data regularly already you
+        can set ``retries`` to 0 to avoid another network round-trip.
+
+        Args:
+
+            retries (:obj:`int`, optional): The number of times to
+                retry waiting for a response (defaults to about 5
+                seconds)
+
+        Returns:
+
+            True if the global or channel specific configuration is
+            invalid, False otherwise.
+
+        Raises:
+
+            A :class:`HeliumError` can be raised on errors. The
+            :class:`NoDataError` error is intercepted and interpreted
+            as if the configuration is not invalid.
+
+        """
+        cdef bool stale = False
+        cdef int status = channel_config_poll_invalidate(&self._helium._ctx, self._channel.id,
+                                                         &stale, retries)
+        try:
+            return _check_status(status, lambda: stale)
+        except NoDataError:
+            return False
+
+    cdef helium_config_type _value_config_type(self, obj):
+        if obj == None:
+            return NIL
+        elif type(obj) == int:
+            return I32
+        elif type(obj) == float:
+            return F32
+        elif type(obj) == type(True):
+            return BOOL
+        elif type(obj) == str:
+            return STR
+        else:
+            raise ValueError("Values must be a string, int, float, bool or None")
+
+    cdef void _value_config_value(self, obj, void *value):
+        if obj == None:
+            return
+        elif type(obj) == int:
+            (<int*>value)[0] = obj;
+        elif type(obj) == float:
+            (<float*>value)[0] = obj;
+        elif type(obj) == type(True):
+            (<bool*>value)[0] = obj;
+        elif type(obj) == str:
+            memcpy(value, <char*>obj, strlen(<char*>obj))
+        else:
+            raise ValueError("Values must be a string, int, float, bool or None")
+
+    @staticmethod
+    def _poll_get_result_func(Helium helium, status, token, retries=POLL_RETRIES_5S):
+        cdef int8_t result = 0
+        handler_ctx = {}
+        if status == OK:
+            status = channel_config_get_poll_result(&helium._ctx, token, _config_get_handler,
+                                                    <void *>handler_ctx, &result, retries)
+        return status, result, handler_ctx
+
+    @staticmethod
+    def _poll_set_result_func(Helium helium, status, token, retries=POLL_RETRIES_5S):
+        cdef int8_t result = 0
+        if status == OK:
+            status = channel_config_set_poll_result(&helium._ctx, token, &result, retries)
+        return status, result, result
+
+
+    def __repr__(self):
+        return '{0} <channel: {1}>'.format(self.__class__.__name__,
+                                           repr(self._channel.name))
+
+
+cdef bool _config_get_handler(void *ctx, const char *config_key,
+                              helium_config_type config_type, void *value):
+    config = <object>ctx
+    if config_type == I32:
+        config_value = (<int*>value)[0]
+    elif config_type == F32:
+        config_value = (<float*>value)[0]
+    elif config_type == BOOL:
+        config_value = (<bool*>value)[0]
+    elif config_type == STR:
+        config_value = <bytes><char *>value
+    elif config_type == NIL:
+        config_value = None
+
+    if config_value is not None:
+        config[config_key] = config_value
+    return False
+
+
