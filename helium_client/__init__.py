@@ -3,6 +3,7 @@
 from ._helium import (
     Helium,
     Channel,
+    Config,
     Info,
     POLL_RETRIES_5S,
     HeliumError,
@@ -22,6 +23,7 @@ __all__ = (
     'POLL_RETRIES_5S'
     'Info',
     'Channel',
+    'Config',
     'HeliumError',
     'NoDataError',
     'CommunicationError',

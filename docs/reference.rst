@@ -20,6 +20,12 @@ Channel
 .. autoclass:: helium_client.Channel
    :members:
 
+Config
+--------------------
+
+.. autoclass:: helium_client.Config
+   :members:
+
 
 Errors
 --------------------

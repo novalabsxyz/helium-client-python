@@ -16,7 +16,7 @@ def get_ext_modules():
                      'helium_client/_serial.c',
                      'helium_client/helium-client/helium-client.c',
                      'helium_client/helium-client/cauterize/atom_api.c',
-                     'helium_client/helium-client/cauterize/atom_api_message.c',
+                     'helium_client/helium-client/cauterize/config_api.c',
                      'helium_client/helium-client/cauterize/cauterize.c']
     extra_compile_args = ['-std=gnu99', '-Werror']
 
