@@ -10,7 +10,11 @@ from libc.stdint cimport (
 
 cdef extern from "helium-client.h":
     cdef:
-         struct ctx "helium_ctx":
+         struct helium "helium_ctx":
+             void * param
+         struct channel "helium_channel":
+             void * param
+         struct config "helium_config":
              void * param
          struct connection:
              pass
@@ -41,20 +45,20 @@ cdef extern from "helium-client.h":
         ERR_DROPPED         "helium_status_ERR_DROPPED"
         ERR_KEEP_AWAKE      "helium_status_ERR_KEEP_AWAKE"
 
-    void init "helium_init"(ctx *, void *)
-    bool needs_reset "helium_needs_reset"(ctx *)
-    int _info "helium_info"(ctx *, info *)
-    int connect "helium_connect"(ctx *, connection *, uint32_t)
-    int connected "helium_connected"(ctx *)
-    int sleep "helium_sleep"(ctx *, connection *)
-    int reset "helium_reset"(ctx *)
+    void helium_init "helium_init"(helium *, void *)
+    bool needs_reset "helium_needs_reset"(helium *)
+    int _info "helium_info"(helium *, info *)
+    int connect "helium_connect"(helium *, connection *, uint32_t)
+    int connected "helium_connected"(helium *)
+    int sleep "helium_sleep"(helium *, connection *)
+    int reset "helium_reset"(helium *)
+    int poll_result "helium_poll_result"(helium *, uint16_t, int8_t *, uint32_t)
 
-    int channel_create "helium_channel_create"(ctx *, const char *, size_t, uint16_t *)
-    int channel_send "helium_channel_send"(ctx *, uint8_t, void *, size_t, uint16_t *)
+    int create_channel "helium_create_channel"(helium *, const char *, size_t, uint16_t *)
 
-    int channel_poll_result "helium_channel_poll_result"(ctx *, uint16_t, int8_t *, uint32_t)
-
-    int channel_config_get "helium_channel_config_get"(ctx *, uint8_t, const char *, uint16_t *)
+    void channel_init "helium_channel_init"(channel *, helium *, uint8_t)
+    int channel_send "helium_channel_send"(channel *, void *, size_t, uint16_t *)
+    int channel_ping "helium_channel_ping"(channel *, uint16_t * t)
 
     enum helium_config_type:
         I32  "helium_config_i32"
@@ -63,32 +67,32 @@ cdef extern from "helium-client.h":
         BOOL "helium_config_bool"
         NIL  "helium_config_null"
 
-    ctypedef bool (*_channel_config_handler)(void *       handler_ctx,
-                                             const char * key,
-                                             helium_config_type value_type,
-                                             void *                  value);
-    int channel_config_get_poll_result "helium_channel_config_get_poll_result"(ctx *,
-                                                                               uint16_t,
-                                                                               _channel_config_handler,
-                                                                               void *,
-                                                                               int8_t *,
-                                                                               uint32_t)
-    int channel_config_set "helium_channel_config_set"(ctx *,
-                                                       uint8_t,
-                                                       const char *config_key,
-                                                       helium_config_type,
-                                                       void *value,
-                                                       uint16_t *token)
+    void config_init "helium_config_init"(config * config, channel *)
+    ctypedef bool (*_config_handler)(void *       handler_ctx,
+                                     const char * key,
+                                     helium_config_type value_type,
+                                     void *                  value);
+    int config_get "helium_config_get"(config *, const char *, uint16_t *)
+    int config_get_poll_result "helium_config_get_poll_result"(config *,
+                                                               uint16_t,
+                                                               _config_handler,
+                                                               void *,
+                                                               int8_t *,
+                                                               uint32_t)
+    int config_set "helium_config_set"(config *,
+                                       const char *config_key,
+                                       helium_config_type,
+                                       void *value,
+                                       uint16_t *token)
 
-    int channel_config_set_poll_result "helium_channel_config_set_poll_result"(ctx *,
-                                                                               uint16_t,
-                                                                               int8_t *,
-                                                                               uint32_t)
+    int config_set_poll_result "helium_config_set_poll_result"(config *,
+                                                               uint16_t,
+                                                               int8_t *,
+                                                               uint32_t)
 
-    int channel_config_poll_invalidate "helium_channel_config_poll_invalidate"(ctx *,
-                                                                               uint8_t,
-                                                                               bool *,
-                                                                               uint32_t)
+    int config_poll_invalidate "helium_config_poll_invalidate"(config *,
+                                                               bool *,
+                                                               uint32_t)
 
 cdef extern from "_serial.h":
   int open_serial_port(const char *, helium_baud)
