@@ -1,0 +1,634 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Reference &#8212; helium-client-python 1.5.1 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Overview" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">helium-client-python 1.5.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reference</a><ul>
+<li><a class="reference internal" href="#helium">Helium</a><ul>
+<li><a class="reference internal" href="#info">Info</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#channel">Channel</a></li>
+<li><a class="reference internal" href="#config">Config</a></li>
+<li><a class="reference internal" href="#errors">Errors</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="helium">
+<h2>Helium<a class="headerlink" href="#helium" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="helium_client.Helium">
+<em class="property">class </em><code class="descname">Helium</code><a class="headerlink" href="#helium_client.Helium" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main class for communicating with the Helium atom.</p>
+<dl class="method">
+<dt id="helium_client.Helium.close">
+<code class="descname">close</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the port used to communicate with the Helium Atom.</p>
+<p>This closes the underlying serial port used to communicate
+with the Helium Atom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>self</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to the network.</p>
+<p>Tries to connect to the Helium Network. If after the give
+number of retries the Atom is not connected to the network a
+<a class="reference internal" href="#helium_client.NotConnectedError" title="helium_client.NotConnectedError"><code class="xref py py-class docutils literal"><span class="pre">NotConnectedError</span></code></a> is raised.</p>
+<p><code class="xref py py-obj docutils literal"><span class="pre">None</span></code> may be passed for <code class="docutils literal"><span class="pre">retries</span></code> in which case you
+can use <a class="reference internal" href="#helium_client.Helium.connected" title="helium_client.Helium.connected"><code class="xref py py-meth docutils literal"><span class="pre">connected()</span></code></a> to check whether the atom is
+connected to the network.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to
+retry waiting for a response (defaults to about 5
+seconds)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> – A HeliumError or a subclass if an
+error occurred.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.connected">
+<code class="descname">connected</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the Atom is connected to the network</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal"><span class="pre">True</span></code> if the Atom is connected to the network
+<code class="xref py py-obj docutils literal"><span class="pre">False</span></code> otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.create_channel">
+<code class="descname">create_channel</code><span class="sig-paren">(</span><em>self</em>, <em>channel_name</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.create_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#helium_client.Channel" title="helium_client.Channel"><code class="xref py py-class docutils literal"><span class="pre">Channel</span></code></a> for a given name.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#helium_client.Channel.create" title="helium_client.Channel.create"><code class="xref py py-meth docutils literal"><span class="pre">Channel.create()</span></code></a> for details.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information on the Helium Atom.</p>
+<p>This gets current information on the Helium Atom this object
+is communicating with. The Atom does not have to be connected
+to the network for this method to be called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#helium_client.Info" title="helium_client.Info"><code class="xref py py-class docutils literal"><span class="pre">Info</span></code></a> on the Helium Atom.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.needs_reset">
+<code class="descname">needs_reset</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.needs_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the Atom needs a reset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-obj docutils literal"><span class="pre">True</span></code> if the Helium Atom requires a reset in order
+to complete a firmware upgrade, <code class="xref py py-obj docutils literal"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.poll_result">
+<code class="descname">poll_result</code><span class="sig-paren">(</span><em>self</em>, <em>token</em>, <em>status=OK</em>, <em>poll_func=None</em>, <em>poll_ctx=None</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.poll_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Poll for a result given a token.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>token</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>) – The token to check a result for.</li>
+<li><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to retry
+waiting for a response (defaults to about 5 seconds).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>The response if successful. An exception is raised
+otherwise.</p>
+<p>For the <code class="xref py py-meth docutils literal"><span class="pre">Channel.create`()</span></code> method this response will
+be the channel id of the created channel. For other
+channel methods the response will be <code class="docutils literal"><span class="pre">0</span></code> if
+successful. On any error a <a class="reference internal" href="#helium_client.ChannelError" title="helium_client.ChannelError"><code class="xref py py-class docutils literal"><span class="pre">ChannelError</span></code></a> is
+raised.</p>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> – A HeliumError or subclass
+representing the error that occurred</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the Helium Atom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Helium.sleep">
+<code class="descname">sleep</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Helium.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect from the network.</p>
+<p>This disconnects the Atom from the network and attempts to put
+the Atom to sleep.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method does not return anything but may raise a
+<code class="xref py py-class docutils literal"><span class="pre">HeliumErrror</span></code> or subclass representing the error
+that occurred. This should not happen in most cases, but if
+the Atom is expecting more data or is in the process of
+receiving an update an error may be raised and will need
+to be handled.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> – A HeliumError or subclass
+representing the error that occurred</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="info">
+<h3>Info<a class="headerlink" href="#info" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="helium_client.Info">
+<em class="property">class </em><code class="descname">Info</code><a class="headerlink" href="#helium_client.Info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents information about a Helium Atom.</p>
+<p>Information on a <code class="xref py py-class docutils literal"><span class="pre">Helium</span></code> instance can be retrieved by
+calling <a class="reference internal" href="#helium_client.Helium.info" title="helium_client.Helium.info"><code class="xref py py-meth docutils literal"><span class="pre">Helium.info()</span></code></a>. The returned object has a number of
+attributes that describe the Atom.</p>
+<dl class="attribute">
+<dt id="Info.mac">
+<code class="descname">mac</code><a class="headerlink" href="#Info.mac" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-obj docutils literal"><span class="pre">int</span></code> – The MAC address of the Atom as an 8 byte integer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Info.uptime">
+<code class="descname">uptime</code><a class="headerlink" href="#Info.uptime" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-obj docutils literal"><span class="pre">int</span></code> – The number of seconds since the Atom has been
+last restarted.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Info.time">
+<code class="descname">time</code><a class="headerlink" href="#Info.time" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-obj docutils literal"><span class="pre">int</span></code> – The current time in seconds since Unix Epoch of
+the Helium Atom. The value of this attribute will not be
+accurate until the Atom is connected to the Helium
+Network.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Info.fw_version">
+<code class="descname">fw_version</code><a class="headerlink" href="#Info.fw_version" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-obj docutils literal"><span class="pre">int</span></code> – The version of the Atom as a 4 byte integer
+representing the <code class="docutils literal"><span class="pre">&lt;majon&gt;&lt;minor&gt;&lt;patch&gt;&lt;extra&gt;</span></code> of the
+firmware version.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Info.radio_count">
+<code class="descname">radio_count</code><a class="headerlink" href="#Info.radio_count" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-obj docutils literal"><span class="pre">int</span></code> – The number of radios present in the Atom.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="channel">
+<h2>Channel<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="helium_client.Channel">
+<em class="property">class </em><code class="descname">Channel</code><a class="headerlink" href="#helium_client.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send and receive data to IoT back-end channels.</p>
+<p>A channel can be created by calling <a class="reference internal" href="#helium_client.Channel.create" title="helium_client.Channel.create"><code class="xref py py-meth docutils literal"><span class="pre">Channel.create()</span></code></a> or
+using the convenience method <a class="reference internal" href="#helium_client.Helium.create_channel" title="helium_client.Helium.create_channel"><code class="xref py py-meth docutils literal"><span class="pre">Helium.create_channel()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="#helium_client.Channel.name" title="helium_client.Channel.name"><strong>name</strong></a> – The name of the channel</li>
+<li><strong>id</strong> – The id of the channel</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="helium_client.Channel.config">
+<code class="descname">config</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Channel.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <a class="reference internal" href="#helium_client.Config" title="helium_client.Config"><code class="xref py py-class docutils literal"><span class="pre">Config</span></code></a> for this channel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Channel.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>type cls</em>, <em>Helium helium</em>, <em>channel_name</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Channel.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a channel.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Channel creation will only succeed if you have set up a
+channel on your Helium Dashboard.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>helium</strong> (<a class="reference internal" href="#helium_client.Helium" title="helium_client.Helium"><code class="xref py py-class docutils literal"><span class="pre">Helium</span></code></a>) – The Helium Atom to use for
+communication.</li>
+<li><strong>channel_name</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) – The name of the channel to create.</li>
+<li><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to
+retry waiting for a response (defaults to about 5
+seconds)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A <a class="reference internal" href="#helium_client.Channel" title="helium_client.Channel"><code class="xref py py-class docutils literal"><span class="pre">Channel</span></code></a> instance if successful. If
+an error occurred or the number of retries is exhausted a
+<a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> is raised.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> – A HeliumError or subclass
+representing the error that occurred</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="helium_client.Channel.name">
+<code class="descname">name</code><a class="headerlink" href="#helium_client.Channel.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>name</em> – bytes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Channel.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>self</em>, <em>data</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Channel.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data on a channel.</p>
+<p>Sends data on a Helium Channel and waits for a given number of
+retries for a response from the channel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<code class="xref py py-obj docutils literal"><span class="pre">bytes</span></code>) – Data to send to the channel.</li>
+<li><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to retry
+waiting for a response (defaults to about 5 seconds)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="config">
+<h2>Config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="helium_client.Config">
+<em class="property">class </em><code class="descname">Config</code><a class="headerlink" href="#helium_client.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get and set global and channel specific configuration data.</p>
+<p>Helium supports configuration variables for a given device in two
+forms:</p>
+<ul>
+<li><p class="first">Global configuration variables - Variables that are available in
+every channel a device connects to. Global configuration
+variables can be fetched and updated using the <code class="docutils literal"><span class="pre">config</span></code>
+prefix.</p>
+</li>
+<li><p class="first">Channel configuration variables - Variables that are channel
+specific, only available if the channel supports it, and tied to
+the lifetime of the channel. Use the <code class="docutils literal"><span class="pre">channel</span></code> prefix when
+getting and setting channel configuration variables.</p>
+<p>Channel configuration variables are mapped to the equivalent
+constructs on the target platform if available. On Azure, for
+example, a <code class="docutils literal"><span class="pre">get</span></code> is mapped to the <code class="docutils literal"><span class="pre">desired</span></code> state of the
+device twin, where as a <code class="docutils literal"><span class="pre">set</span></code> updates the <code class="docutils literal"><span class="pre">reported</span></code> section
+of the device twin.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not all channels support the same constructs or both get and
+set. Refer to the channel specific settings and documentation
+to see how much of the configuration API is supported.</p>
+</div>
+<p class="rubric">Example</p>
+<p>To get a global configuration variable called <code class="docutils literal"><span class="pre">interval</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">config</span><span class="p">()</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;config.interval&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To get a channel specific configuration variable called
+<code class="docutils literal"><span class="pre">color</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">config</span><span class="p">()</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;channel.color&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="helium_client.Config.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>self</em>, <em>config_key</em>, <em>default=None</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Config.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a configuration variable.</p>
+<p>Fetches the configuration value for a given key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>config_key</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) – The key to look up.</li>
+<li><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to
+retry waiting for a response (defaults to about 5
+seconds)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Keword Args:</p>
+<blockquote>
+<div>default: The default value to return if the key was not found.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The value for the given key if found, the specified
+default if not found.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> – A HeliumError or subclass
+representing the error that occurred</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Config.poll_invalidate">
+<code class="descname">poll_invalidate</code><span class="sig-paren">(</span><em>self</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Config.poll_invalidate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for configuration invalidation.</p>
+<p>When a global or channel configuration variable is changed in
+the Dashboard or in the channel specific UI or API, an
+invalidation message is queued up for the device.</p>
+<p>The invalidation message is delivered to the device as soon as
+the network detects the device transmitting data of any kind.</p>
+<p>This means that if you’re sending data regularly already you
+can set <code class="docutils literal"><span class="pre">retries</span></code> to 0 to avoid another network round-trip.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to
+retry waiting for a response (defaults to about 5
+seconds)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the global or channel specific configuration is
+invalid, False otherwise.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>A <code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code> can be raised on errors. The</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">NoDataError</span></code> error is intercepted and interpreted</li>
+<li>as if the configuration is not invalid.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helium_client.Config.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>self</em>, <em>config_key</em>, <em>config_value</em>, <em>retries=POLL_RETRIES_5S</em><span class="sig-paren">)</span><a class="headerlink" href="#helium_client.Config.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a configuration variable.</p>
+<p>Sets a configuration variable for the given key to the given
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>config_key</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) – The key to look up.</li>
+<li><strong>config_value</strong> – The value to set.</li>
+<li><strong>retries</strong> (<code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional) – The number of times to
+retry waiting for a response (defaults to about 5
+seconds)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#helium_client.HeliumError" title="helium_client.HeliumError"><code class="xref py py-class docutils literal"><span class="pre">HeliumError</span></code></a> – A HeliumError or subclass
+representing the error that occurred</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="helium_client.HeliumError">
+<em class="property">class </em><code class="descname">HeliumError</code><a class="headerlink" href="#helium_client.HeliumError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base error class for Helium related errors.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="helium_client.NoDataError">
+<em class="property">class </em><code class="descname">NoDataError</code><a class="headerlink" href="#helium_client.NoDataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a failure getting data for a channel request.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="helium_client.CommunicationError">
+<em class="property">class </em><code class="descname">CommunicationError</code><a class="headerlink" href="#helium_client.CommunicationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a failure communicating with the Helium atom.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="helium_client.NotConnectedError">
+<em class="property">class </em><code class="descname">NotConnectedError</code><a class="headerlink" href="#helium_client.NotConnectedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents not being connected to the network.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="helium_client.DroppedError">
+<em class="property">class </em><code class="descname">DroppedError</code><a class="headerlink" href="#helium_client.DroppedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the request being dropped by the Helium Atom.</p>
+<p>This should not happen with reasonable use of the Helium
+Atom. This may occur when you send many requests quickly, the
+radio does not receive an acknowledgement of receipt by the
+Element, or the radio looses access to it’s channel.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="helium_client.KeepAwakeError">
+<em class="property">class </em><code class="descname">KeepAwakeError</code><a class="headerlink" href="#helium_client.KeepAwakeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents pending data for the Helium Atom.</p>
+<p>This is most likely to happen when you try to put the Atom to
+sleep and there is a pending firmware update that is in progress.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="helium_client.ChannelError">
+<em class="property">class </em><code class="descname">ChannelError</code><a class="headerlink" href="#helium_client.ChannelError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an error response for a channel request.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="POLL_RETRIES_5S">
+<code class="descname">POLL_RETRIES_5S</code><a class="headerlink" href="#POLL_RETRIES_5S" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of retries that is about 5 seconds to poll the Helium Atom for.</p>
+<p>When making requests to the <a class="reference internal" href="#helium_client.Helium" title="helium_client.Helium"><code class="xref py py-class docutils literal"><span class="pre">Helium</span></code></a> and <a class="reference internal" href="#helium_client.Channel" title="helium_client.Channel"><code class="xref py py-class docutils literal"><span class="pre">Channel</span></code></a>
+objects they are sent over the serial port to the Helium Atom. In
+order to not wait indefinitely for a response you can specify how
+many times to poll the Atom for a response and have sleep for a
+small amount of time between each request.</p>
+<p>This constant represents approximately 5 seconds of wait time. It
+is not intended to be a precise timeout but helps detect requests
+that have run too long.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">helium-client-python 1.5.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Helium Systens, Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.4.
+    </div>
+  </body>
+</html>
